@@ -1,7 +1,7 @@
-import SignInSide from "./components/SignUp/SignInSide";
+import AuthLayout from "./components/AuthLayout/AuthLayout";
 
 export default function App() {
   return (
-    <SignInSide/>
+    <AuthLayout/>
   )
 }
