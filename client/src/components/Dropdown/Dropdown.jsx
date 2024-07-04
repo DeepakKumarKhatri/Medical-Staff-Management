@@ -2,8 +2,10 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { MoreVertical } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function PositionedMenu() {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -38,8 +40,10 @@ export default function PositionedMenu() {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-        <MenuItem onClick={handleClose}>Edit Profile</MenuItem>
+        <MenuItem onClick={() => navigate("/")}>Logout</MenuItem>
+        <MenuItem onClick={() => navigate("/patient/edit-profile")}>
+          Edit Profile
+        </MenuItem>
       </Menu>
     </div>
   );

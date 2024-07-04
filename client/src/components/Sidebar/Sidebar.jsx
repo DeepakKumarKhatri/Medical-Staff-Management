@@ -55,7 +55,9 @@ export function Sidebar({ children }) {
                 <h4 className="font-semibold">Medico</h4>
                 <span className="text-xs text-gray-600">medico@gmail.com</span>
               </div>
+              <span className="bg-gray-300 p-2 rounded-lg	hover:bg-gray-400">
               <PositionedMenu />
+              </span>
             </div>
           </div>
         </nav>

@@ -8,6 +8,7 @@ import PatientTreatment from "./screens/PatientTreatment/PatientTreatment";
 import TreatmentDetail from "./components/Treatment/TreatmentDetail";
 import InstructionsDetail from "./components/Instructions/InstructionsDetail";
 import PatientInstructions from "./screens/PatientInstructions/PatientInstructions";
+import PatientProfile from "./screens/PatientProfile/PatientProfile";
 
 const router = createBrowserRouter([
   {
@@ -50,7 +51,12 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <SignUp />,
+        element: <PatientProfile comingFrom={'profile'} />,
+        errorElement: <NotFound />,
+      },
+      {
+        path: "edit-profile",
+        element: <PatientProfile comingFrom={'edit-profile'} />,
         errorElement: <NotFound />,
       },
       {
