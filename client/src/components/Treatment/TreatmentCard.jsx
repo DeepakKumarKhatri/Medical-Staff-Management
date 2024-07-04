@@ -2,6 +2,7 @@ import { Chip } from "@mui/material";
 import { ChevronRight } from "lucide-react";
 import React from "react";
 import { getChipColor } from "../../lib/getChipColor";
+import { Link } from "react-router-dom";
 
 const TreatmentCard = ({ title, diagnosedBy, treatmentPhase }) => {
   const chipStyles = getChipColor(treatmentPhase);
@@ -10,18 +11,31 @@ const TreatmentCard = ({ title, diagnosedBy, treatmentPhase }) => {
     <div className="flex items-center justify-between border-2 border-gray-400 rounded-2xl p-4 m-2 shadow-lg hover:shadow-xl transition-shadow">
       <div className="flex flex-col">
         <div className="flex">
-          <p className="font-bold underline underline-offset-1">Title:</p>
-          <p className="font-semibold text-gray-500">&nbsp;{title}</p>
+          <p
+            title="Disease Name"
+            className="font-bold underline underline-offset-1"
+          >
+            Title:
+          </p>
+          <p title="Disease Name" className="font-semibold text-gray-500">
+            &nbsp;{title}
+          </p>
         </div>
         <div className="flex">
-          <p className="font-bold underline underline-offset-1">
+          <p
+            title="Doctor Name"
+            className="font-bold underline underline-offset-1"
+          >
             Diagnosed By:
           </p>
-          <p className="font-semibold text-gray-500">&nbsp;{diagnosedBy}</p>
+          <p title="Doctor Name" className="font-semibold text-gray-500">
+            &nbsp;{diagnosedBy}
+          </p>
         </div>
       </div>
       <div className="flex items-center gap-4">
         <Chip
+          title="Treatment Status"
           label={treatmentPhase}
           variant="outlined"
           style={{
@@ -29,9 +43,13 @@ const TreatmentCard = ({ title, diagnosedBy, treatmentPhase }) => {
             borderColor: chipStyles.borderColor,
           }}
         />
-        <div className="cursor-pointer p-2 hover:bg-gray-200 rounded-full transition-colors">
+        <Link
+          to={`:treatmentID`}
+          title="Check Details"
+          className="cursor-pointer p-2 hover:bg-gray-200 rounded-full transition-colors"
+        >
           <ChevronRight size={24} />
-        </div>
+        </Link>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NotFound from "./screens/NotFound/NotFound";
 import SidebarLayout from "./components/Sidebar/SidebarLayout";
 import PatientTreatment from "./screens/PatientTreatment/PatientTreatment";
+import TreatmentDetail from "./components/Treatment/TreatmentDetail";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,11 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <SignUp />,
+        errorElement: <NotFound />,
+      },
+      {
+        path: "treatments/:treatmentID",
+        element: <TreatmentDetail />,
         errorElement: <NotFound />,
       },
     ],
