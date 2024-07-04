@@ -11,11 +11,19 @@ import profile from "../../assets/images/logo/logo.png";
 import { createContext, useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import PositionedMenu from "../Dropdown/Dropdown";
+import { useEscapeToggle } from "../../hooks/useEscapeToggle";
 
 const SidebarContext = createContext();
 
 export function Sidebar({ children }) {
   const [expanded, setExpanded] = useState(true);
+
+  const toggleExpanded = () => {
+    setExpanded((curr) => !curr);
+  };
+
+  useEscapeToggle(toggleExpanded);
+
   return (
     <>
       <aside className="h-screen">
@@ -29,10 +37,14 @@ export function Sidebar({ children }) {
               alt="Medico App Logo"
             />
             <button
-              onClick={() => setExpanded((curr) => !curr)}
+              onClick={toggleExpanded}
               className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
             >
-              {expanded ? <ChevronFirst /> : <ChevronLast />}
+              {expanded ? (
+                <ChevronFirst className="bg-gray-300 rounded-lg	hover:bg-gray-400" />
+              ) : (
+                <ChevronLast className="bg-gray-300 rounded-lg	hover:bg-gray-400" />
+              )}
             </button>
           </div>
 
@@ -56,7 +68,7 @@ export function Sidebar({ children }) {
                 <span className="text-xs text-gray-600">medico@gmail.com</span>
               </div>
               <span className="bg-gray-300 p-2 rounded-lg	hover:bg-gray-400">
-              <PositionedMenu />
+                <PositionedMenu />
               </span>
             </div>
           </div>
