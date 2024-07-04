@@ -124,6 +124,8 @@ export function SidebarItem({ icon, text, to, alert }) {
 const SidebarCaller = ({ children }) => {
   return (
     <Sidebar>
+      <hr className="my-3" />
+
       <SidebarItem
         icon={<BriefcaseMedical size={20} />}
         text="My Treatments"
@@ -136,14 +138,14 @@ const SidebarCaller = ({ children }) => {
       />
       <hr className="my-3" />
       <SidebarItem
-        icon={<HandHelping size={20} />}
-        text="Help"
-        to="/patient/help"
-      />
-      <SidebarItem
         icon={<User size={20} />}
         text="Profile"
         to="/patient/profile"
+      />
+      <SidebarItem
+        icon={<HandHelping size={20} />}
+        text="Help"
+        to="/patient/help"
       />
     </Sidebar>
   );

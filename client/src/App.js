@@ -9,6 +9,7 @@ import TreatmentDetail from "./components/Treatment/TreatmentDetail";
 import InstructionsDetail from "./components/Instructions/InstructionsDetail";
 import PatientInstructions from "./screens/PatientInstructions/PatientInstructions";
 import PatientProfile from "./screens/PatientProfile/PatientProfile";
+import PatientHelp from "./screens/PatientHelp/PatientHelp";
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path: "help",
-        element: <SignUp />,
+        element: <PatientHelp />,
         errorElement: <NotFound />,
       },
       {

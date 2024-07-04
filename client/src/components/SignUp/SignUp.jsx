@@ -86,7 +86,12 @@ export default function SignUp() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{
+              mt: 3,
+              mb: 2,
+              backgroundColor: "#F4A261",
+              "&:hover": { backgroundColor: "#E76F51" },
+            }}
           >
             Sign Up
           </Button>
