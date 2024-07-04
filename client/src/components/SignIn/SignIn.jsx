@@ -4,13 +4,13 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
 
-export default function SignInSide() {
+export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -71,9 +71,15 @@ export default function SignInSide() {
         </Button>
         <Grid container>
           <Grid item>
-            <Link href="#" variant="body2">
-              {"Don't have an account? Sign Up"}
-            </Link>
+            <div className="flex gap-1">
+              <p className="font-bold">Don't have an account?</p>
+              <Link
+                to={"/register"}
+                className="text-blue-600 font-bold underline underline-offset-6"
+              >
+                Sign Up
+              </Link>
+            </div>
           </Grid>
         </Grid>
       </Box>

@@ -3,8 +3,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextBackground from "../TextBackground/TextBackground";
-import SignIn from "../SignIn/SignIn";
-import SignUp from "../SignUp/SignUp";
 
 export default function AuthLayout({ children }) {
   return (

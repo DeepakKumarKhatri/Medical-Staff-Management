@@ -3,12 +3,12 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { Link } from "react-router-dom";
 
 export default function SignUp() {
   const handleSubmit = (event) => {
@@ -92,9 +92,15 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
+              <div className="flex gap-1">
+                <p className="font-bold">Already have an account?</p>
+                <Link
+                  to={"/"}
+                  className="text-blue-600 font-bold underline underline-offset-6"
+                >
+                  Sign in
+                </Link>
+              </div>
             </Grid>
           </Grid>
         </Box>
