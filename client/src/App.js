@@ -4,6 +4,7 @@ import SignUp from "./components/SignUp/SignUp";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NotFound from "./screens/NotFound/NotFound";
 import SidebarLayout from "./components/Sidebar/SidebarLayout";
+import PatientTreatment from "./screens/PatientTreatment/PatientTreatment";
 
 const router = createBrowserRouter([
   {
@@ -30,8 +31,8 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        path: "home",
-        element: <SignUp />,
+        path: "treatments",
+        element: <PatientTreatment />,
         errorElement: <NotFound />,
       },
       {

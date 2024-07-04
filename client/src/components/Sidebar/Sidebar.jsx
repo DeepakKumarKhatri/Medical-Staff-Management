@@ -55,7 +55,7 @@ export function Sidebar({ children }) {
                 <h4 className="font-semibold">Medico</h4>
                 <span className="text-xs text-gray-600">medico@gmail.com</span>
               </div>
-              <PositionedMenu/>
+              <PositionedMenu />
             </div>
           </div>
         </nav>
@@ -113,7 +113,7 @@ const SidebarCaller = ({ children }) => {
       <SidebarItem
         icon={<BriefcaseMedical size={20} />}
         text="My Treatments"
-        to="/patient/home"
+        to="/patient/treatments"
       />
       <SidebarItem
         icon={<ClipboardPlus size={20} />}
