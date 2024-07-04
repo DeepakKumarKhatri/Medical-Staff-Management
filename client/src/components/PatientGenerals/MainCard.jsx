@@ -4,7 +4,7 @@ import React from "react";
 import { getChipColor } from "../../lib/getChipColor";
 import { Link } from "react-router-dom";
 
-const TreatmentCard = ({ title, diagnosedBy, treatmentPhase }) => {
+const MainCard = ({ title, diagnosedBy, treatmentPhase, comingFrom }) => {
   const chipStyles = getChipColor(treatmentPhase);
 
   return (
@@ -44,7 +44,7 @@ const TreatmentCard = ({ title, diagnosedBy, treatmentPhase }) => {
           }}
         />
         <Link
-          to={`:treatmentID`}
+          to={comingFrom === 'PT' ? `:treatmentID` : `:instructionsID`}
           title="Check Details"
           className="cursor-pointer p-2 hover:bg-gray-200 rounded-full transition-colors"
         >
@@ -55,4 +55,4 @@ const TreatmentCard = ({ title, diagnosedBy, treatmentPhase }) => {
   );
 };
 
-export default TreatmentCard;
+export default MainCard;

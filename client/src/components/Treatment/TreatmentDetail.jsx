@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const TreatmentDetail = () => {
+  const navigate = useNavigate();
   const treatmentDetails = {
     diseaseName: "Malaria",
     checkedByDoctor: "Dr. Alma",
@@ -33,12 +34,13 @@ const TreatmentDetail = () => {
           <p className="text-gray-700 mb-6">{treatmentDetails.details}</p>
         </div>
         <div className="p-4 bg-gray-100">
-          <Link
-            to={`/instructions/:instructionsID`}
+          <div
+            onClick={() => navigate("/patient/instructions/:instructionsID")}
+            to={`instructions/:instructionsID`}
             className="block text-center py-2 px-4 bg-[#F4A261] text-white font-semibold rounded-md shadow-md hover:bg-[#E76F51] transition-colors"
           >
             Check Treatment Instructions
-          </Link>
+          </div>
         </div>
       </div>
     </div>

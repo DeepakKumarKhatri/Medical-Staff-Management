@@ -6,6 +6,8 @@ import NotFound from "./screens/NotFound/NotFound";
 import SidebarLayout from "./components/Sidebar/SidebarLayout";
 import PatientTreatment from "./screens/PatientTreatment/PatientTreatment";
 import TreatmentDetail from "./components/Treatment/TreatmentDetail";
+import InstructionsDetail from "./components/Instructions/InstructionsDetail";
+import PatientInstructions from "./screens/PatientInstructions/PatientInstructions";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +40,7 @@ const router = createBrowserRouter([
       },
       {
         path: "instructions",
-        element: <SignUp />,
+        element: <PatientInstructions />,
         errorElement: <NotFound />,
       },
       {
@@ -54,6 +56,11 @@ const router = createBrowserRouter([
       {
         path: "treatments/:treatmentID",
         element: <TreatmentDetail />,
+        errorElement: <NotFound />,
+      },
+      {
+        path: "instructions/:instructionsID",
+        element: <InstructionsDetail />,
         errorElement: <NotFound />,
       },
     ],

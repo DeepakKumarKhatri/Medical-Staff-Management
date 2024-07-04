@@ -1,6 +1,6 @@
 export const getChipColor = (label) => {
   switch (label) {
-    case "Treatment Start":
+    case "Start-Treatment":
       return { color: "#ffebee", borderColor: "#e57373" };
     case "Mid-Treatment":
       return { color: "#e3f2fd", borderColor: "#64b5f6" };

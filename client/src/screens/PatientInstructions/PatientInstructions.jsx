@@ -2,24 +2,24 @@ import React from "react";
 import MainHeader from "../../components/PatientGenerals/MainHeader";
 import MainCard from "../../components/PatientGenerals/MainCard";
 
-const PatientTreatment = () => {
+const PatientInstructions = () => {
   return (
     <>
-      <MainHeader comingFrom={"PT"} />
+      <MainHeader comingFrom={"PI"} />
       <MainCard
-        comingFrom={"PT"}
+        comingFrom={"PI"}
         title="Malaria"
         diagnosedBy="Dr. Alma"
         treatmentPhase="Mid-Treatment"
       />
       <MainCard
-        comingFrom={"PT"}
+        comingFrom={"PI"}
         title="Dengue"
         diagnosedBy="Dr. Aslam"
         treatmentPhase="Start-Treatment"
       />
       <MainCard
-        comingFrom={"PT"}
+        comingFrom={"PI"}
         title="Fever"
         diagnosedBy="Dr. Abbas"
         treatmentPhase="End-Treatment"
@@ -28,4 +28,4 @@ const PatientTreatment = () => {
   );
 };
 
-export default PatientTreatment;
+export default PatientInstructions;
