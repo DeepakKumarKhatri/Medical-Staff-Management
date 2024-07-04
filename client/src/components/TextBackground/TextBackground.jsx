@@ -4,7 +4,7 @@ const TextBackground = () => {
   return (
     <div className="flex flex-col items-start justify-center h-full p-8 bg-gray-100">
       <img
-        src={'https://avatars.githubusercontent.com/u/86526696?v=4'}
+        src="../../assets/images/logo/logo.png"
         alt="Hospital Management System Logo"
         className="mb-4 w-24 h-24"
       />
