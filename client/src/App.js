@@ -3,7 +3,7 @@ import SignIn from "./components/SignIn/SignIn";
 import SignUp from "./components/SignUp/SignUp";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NotFound from "./screens/NotFound/NotFound";
-import SidebarLayout from "./components/Sidebar/SidebarLayout";
+import SidebarLayout from "./components/PatientSidebar/SidebarLayout";
 import PatientTreatment from "./screens/PatientTreatment/PatientTreatment";
 import TreatmentDetail from "./components/Treatment/TreatmentDetail";
 import InstructionsDetail from "./components/Instructions/InstructionsDetail";
@@ -38,37 +38,30 @@ const router = createBrowserRouter([
       {
         path: "treatments",
         element: <PatientTreatment />,
-        errorElement: <NotFound />,
       },
       {
         path: "instructions",
         element: <PatientInstructions />,
-        errorElement: <NotFound />,
       },
       {
         path: "help",
         element: <PatientHelp />,
-        errorElement: <NotFound />,
       },
       {
         path: "profile",
-        element: <PatientProfile comingFrom={'profile'} />,
-        errorElement: <NotFound />,
+        element: <PatientProfile comingFrom={"profile"} />,
       },
       {
         path: "edit-profile",
-        element: <PatientProfile comingFrom={'edit-profile'} />,
-        errorElement: <NotFound />,
+        element: <PatientProfile comingFrom={"edit-profile"} />,
       },
       {
         path: "treatments/:treatmentID",
         element: <TreatmentDetail />,
-        errorElement: <NotFound />,
       },
       {
         path: "instructions/:instructionsID",
         element: <InstructionsDetail />,
-        errorElement: <NotFound />,
       },
     ],
   },

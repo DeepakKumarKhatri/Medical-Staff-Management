@@ -1,5 +1,5 @@
 import React from "react";
-import SidebarCaller from "./Sidebar";
+import SidebarCaller from "./PatientSidebar";
 import { Outlet } from "react-router-dom";
 
 const SidebarLayout = () => {
