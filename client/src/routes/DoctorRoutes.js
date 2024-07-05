@@ -1,6 +1,7 @@
 import DoctorSidebarCaller from "../components/DoctorSidebar/DoctorSidebar";
 import AddPatient from "../components/Forms/AddPatient";
 import SidebarLayout from "../components/Layouts/SidebarLayout";
+import PatientRecordDetail from "../components/MedicalRecords/PatientRecordDetail";
 import DoctorPatients from "../screens/DoctorPatients/DoctorPatients";
 import DoctorProfile from "../screens/DoctorProfile/DoctorProfile";
 import Help from "../screens/Help/PatientHelp";
@@ -20,6 +21,10 @@ export const doctor_routes = {
     {
       path: "patient-records",
       element: <PatientRecord />,
+    },
+    {
+      path: "patient-records/:recordID",
+      element: <PatientRecordDetail />,
     },
     {
       path: "share-info",
