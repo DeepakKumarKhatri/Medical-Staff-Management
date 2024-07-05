@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import logo from "../../assets/images/logo/logo.png";
 import profile from "../../assets/images/logo/logo.png";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PositionedMenu from "../Dropdown/Dropdown";
 import { useEscapeToggle } from "../../hooks/useEscapeToggle";
 
@@ -72,7 +72,7 @@ export function Sidebar({ children }) {
                 <span className="text-xs text-gray-600">medico@gmail.com</span>
               </div>
               <span className="bg-gray-300 p-2 rounded-lg hover:bg-gray-400">
-                <PositionedMenu />
+                <PositionedMenu comingFrom={'doctor'} />
               </span>
             </div>
           </div>
@@ -85,11 +85,16 @@ export function Sidebar({ children }) {
 export function SidebarItem({ icon, text, to, alert, children }) {
   const { expanded } = useContext(SidebarContext);
   const location = useLocation();
+  const navigate = useNavigate();
   const active = location.pathname === to;
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+  const handleClick = () => {
+    if (children) {
+      setIsOpen(!isOpen);
+    } else if (to) {
+      navigate(to);
+    }
   };
 
   return (
@@ -101,7 +106,7 @@ export function SidebarItem({ icon, text, to, alert, children }) {
               ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
               : "hover:bg-indigo-50 text-gray-600"
           }`}
-          onClick={children ? toggleDropdown : null}
+          onClick={handleClick}
         >
           {icon}
           <span

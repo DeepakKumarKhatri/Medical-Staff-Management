@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { labels } from "../../constants/RatingLabels";
 
-const PatientHelp = () => {
+const Help = ({ comingFrom }) => {
   const [formData, setFormData] = useState({
     subject: "",
     message: "",
@@ -165,4 +165,4 @@ const PatientHelp = () => {
   );
 };
 
-export default PatientHelp;
+export default Help;

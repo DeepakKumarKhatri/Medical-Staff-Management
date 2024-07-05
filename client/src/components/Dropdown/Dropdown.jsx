@@ -4,7 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export default function PositionedMenu() {
+export default function PositionedMenu({ comingFrom }) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -41,7 +41,15 @@ export default function PositionedMenu() {
         }}
       >
         <MenuItem onClick={() => navigate("/")}>Logout</MenuItem>
-        <MenuItem onClick={() => navigate("/patient/edit-profile")}>
+        <MenuItem
+          onClick={() =>
+            navigate(
+              comingFrom === "doctor"
+                ? "/doctor/edit-profile"
+                : "/patient/edit-profile"
+            )
+          }
+        >
           Edit Profile
         </MenuItem>
       </Menu>
