@@ -1,5 +1,4 @@
 import React from "react";
-import { Image } from "lucide-react";
 
 const PatientRecordDetail = () => {
   return (
@@ -7,10 +6,18 @@ const PatientRecordDetail = () => {
       <div className="bg-white p-6 rounded-lg shadow-md">
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-gray-800">Patient Record Detail</h2>
-            <p className="text-gray-500">Detailed information about the patient</p>
+            <h2 className="text-2xl font-bold text-gray-800">
+              Patient Record Detail
+            </h2>
+            <p className="text-gray-500">
+              Detailed information about the patient
+            </p>
           </div>
-          <Image src="https://avatars.githubusercontent.com/u/86526696?v=4" className="w-20 h-20 rounded-full bg-gray-200" alt="Patient" />
+          <img
+            src={"https://avatars.githubusercontent.com/u/86526696?v=4"}
+            className="w-20 h-20 rounded-full bg-gray-200"
+            alt="Patient"
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -30,7 +37,9 @@ const PatientRecordDetail = () => {
         </div>
 
         <div>
-          <h3 className="text-xl font-semibold text-gray-800">Instruction Given</h3>
+          <h3 className="text-xl font-semibold text-gray-800">
+            Instruction Given
+          </h3>
           <p className="text-gray-600 mt-2">Description of Instruction Given</p>
         </div>
       </div>
