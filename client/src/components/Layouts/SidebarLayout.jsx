@@ -1,11 +1,10 @@
 import React from "react";
-import SidebarCaller from "./PatientSidebar";
 import { Outlet } from "react-router-dom";
 
-const SidebarLayout = () => {
+const SidebarLayout = ({ children }) => {
   return (
     <div className="flex">
-      <SidebarCaller />
+      {children}
       <div className="flex-1">
         <Outlet />
       </div>

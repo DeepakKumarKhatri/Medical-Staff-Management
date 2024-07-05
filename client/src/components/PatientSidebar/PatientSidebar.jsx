@@ -121,7 +121,7 @@ export function SidebarItem({ icon, text, to, alert }) {
   );
 }
 
-const SidebarCaller = ({ children }) => {
+const PatientSidebarCaller = ({ children }) => {
   return (
     <Sidebar>
       <hr className="my-3" />
@@ -151,4 +151,4 @@ const SidebarCaller = ({ children }) => {
   );
 };
 
-export default SidebarCaller;
+export default PatientSidebarCaller;
