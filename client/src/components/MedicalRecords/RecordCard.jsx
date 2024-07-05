@@ -2,26 +2,13 @@ import React from "react";
 import { ChevronRight } from "lucide-react";
 import { Chip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { getChipStyle } from "../../constants/getChipStyle";
 
 const RecordCard = ({ records }) => {
   const navigate = useNavigate();
 
   const handleDetailClick = (recordID) => {
     navigate(`/doctor/patient-records/${recordID}`);
-  };
-
-  const getChipStyle = (status) => {
-    if (status === "Active") {
-      return {
-        backgroundColor: "#a5d6a7", // light green
-        animation: "pulse-green 2s infinite",
-      };
-    } else {
-      return {
-        backgroundColor: "#ef9a9a", // light red
-        animation: "pulse-red 2s infinite",
-      };
-    }
   };
 
   return (
