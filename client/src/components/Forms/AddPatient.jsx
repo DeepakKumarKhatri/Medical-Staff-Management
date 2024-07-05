@@ -15,58 +15,60 @@ import { Add as AddIcon, FileCopy as FileCopyIcon } from "@mui/icons-material";
 import { generateUniqueId, generatePassword } from "../../lib/doctor_helpers";
 
 const AddPatient = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [profileImage, setProfileImage] = useState(null);
-  const [diseases, setDiseases] = useState([]);
-  const [instructions, setInstructions] = useState([]);
-  const [patientId, setPatientId] = useState("");
-  const [password, setPassword] = useState("");
+  const [patientData, setPatientData] = useState({
+    firstName: "",
+    lastName: "",
+    profileImage: null,
+    diseases: [],
+    instructions: []
+  });
+  const [generatedCredentials, setGeneratedCredentials] = useState({
+    patientId: "",
+    password: ""
+  });
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
+  const handleChange = (field, value) => {
+    setPatientData({ ...patientData, [field]: value });
+  };
+
   const handleAddDisease = () => {
-    setDiseases([...diseases, ""]);
-    setInstructions([...instructions, ""]);
+    setPatientData({
+      ...patientData,
+      diseases: [...patientData.diseases, ""],
+      instructions: [...patientData.instructions, ""]
+    });
   };
 
   const handleDiseaseChange = (index, value) => {
-    const newDiseases = [...diseases];
+    const newDiseases = [...patientData.diseases];
     newDiseases[index] = value;
-    setDiseases(newDiseases);
+    setPatientData({ ...patientData, diseases: newDiseases });
   };
 
   const handleInstructionChange = (index, value) => {
-    const newInstructions = [...instructions];
+    const newInstructions = [...patientData.instructions];
     newInstructions[index] = value;
-    setInstructions(newInstructions);
+    setPatientData({ ...patientData, instructions: newInstructions });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const id = generateUniqueId(firstName, lastName);
-    const pass = generatePassword(firstName, lastName);
-    setPatientId(id);
-    setPassword(pass);
+    const id = generateUniqueId(patientData.firstName, patientData.lastName);
+    const pass = generatePassword(patientData.firstName, patientData.lastName);
+    setGeneratedCredentials({ patientId: id, password: pass });
     // Logic to save the patient data to the database
-    console.log({
-      firstName,
-      lastName,
-      profileImage,
-      diseases,
-      instructions,
-      id,
-      pass
-    });
+    console.log({ ...patientData, id, pass });
   };
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setProfileImage(URL.createObjectURL(e.target.files[0]));
+      setPatientData({ ...patientData, profileImage: URL.createObjectURL(e.target.files[0]) });
     }
   };
 
   const handleCopyCredentials = () => {
-    const credentials = `ID: ${patientId}\nPassword: ${password}`;
+    const credentials = `ID: ${generatedCredentials.patientId}\nPassword: ${generatedCredentials.password}`;
     navigator.clipboard.writeText(credentials);
     setOpenSnackbar(true);
   };
@@ -95,8 +97,8 @@ const AddPatient = () => {
               <TextField
                 fullWidth
                 label="First Name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                value={patientData.firstName}
+                onChange={(e) => handleChange("firstName", e.target.value)}
                 variant="outlined"
                 required
               />
@@ -105,8 +107,8 @@ const AddPatient = () => {
               <TextField
                 fullWidth
                 label="Last Name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                value={patientData.lastName}
+                onChange={(e) => handleChange("lastName", e.target.value)}
                 variant="outlined"
                 required
               />
@@ -122,14 +124,14 @@ const AddPatient = () => {
               <label htmlFor="profile-image-upload">
                 <IconButton component="span">
                   <Avatar
-                    src={profileImage}
+                    src={patientData.profileImage}
                     sx={{ width: 56, height: 56 }}
                   />
                 </IconButton>
               </label>
             </Grid>
           </Grid>
-          {diseases.map((disease, index) => (
+          {patientData.diseases.map((disease, index) => (
             <Box key={index} sx={{ mt: 2, mb: 2 }}>
               <TextField
                 fullWidth
@@ -142,7 +144,7 @@ const AddPatient = () => {
               <TextField
                 fullWidth
                 label={`Instruction for Disease ${index + 1}`}
-                value={instructions[index]}
+                value={patientData.instructions[index]}
                 onChange={(e) => handleInstructionChange(index, e.target.value)}
                 variant="outlined"
                 margin="normal"
@@ -168,13 +170,13 @@ const AddPatient = () => {
             Add Patient
           </Button>
         </form>
-        {patientId && (
+        {generatedCredentials.patientId && (
           <Box mt={4} p={2} bgcolor="background.paper" borderRadius={2} boxShadow={1}>
             <Typography variant="h6" gutterBottom>
               Here are your generated credentials for future usage:
             </Typography>
-            <Typography><strong>ID:</strong> {patientId}</Typography>
-            <Typography><strong>Password:</strong> {password}</Typography>
+            <Typography><strong>ID:</strong> {generatedCredentials.patientId}</Typography>
+            <Typography><strong>Password:</strong> {generatedCredentials.password}</Typography>
             <Button
               variant="outlined"
               startIcon={<FileCopyIcon />}
