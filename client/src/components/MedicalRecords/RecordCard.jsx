@@ -16,7 +16,7 @@ const RecordCard = ({ records }) => {
       {records.map((record) => (
         <div
           key={record.id}
-          className="flex flex-col bg-gray-100 p-4 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
+          className="flex flex-col bg-gray-50 p-4 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
         >
           <div className="flex justify-between items-center">
             <ChevronRight
