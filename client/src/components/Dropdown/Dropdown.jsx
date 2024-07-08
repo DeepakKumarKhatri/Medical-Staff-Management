@@ -3,14 +3,17 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { decidePath } from "../../constants/SidebarPaths";
 
 export default function PositionedMenu({ comingFrom }) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -40,15 +43,19 @@ export default function PositionedMenu({ comingFrom }) {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={() => navigate("/")}>Logout</MenuItem>
         <MenuItem
-          onClick={() =>
-            navigate(
-              comingFrom === "doctor"
-                ? "/doctor/edit-profile"
-                : "/patient/edit-profile"
-            )
-          }
+          onClick={() => {
+            navigate("/");
+            handleClose();
+          }}
+        >
+          Logout
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            navigate(decidePath(comingFrom));
+            handleClose();
+          }}
         >
           Edit Profile
         </MenuItem>

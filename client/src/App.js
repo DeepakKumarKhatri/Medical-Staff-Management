@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NotFound from "./screens/NotFound/NotFound";
 import { patient_routes } from "./routes/PatientRoutes";
 import { doctor_routes } from "./routes/DoctorRoutes";
+import { clinic_manager_routes } from "./routes/ClinicManagerRoutes";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
   },
   patient_routes,
   doctor_routes,
+  clinic_manager_routes,
 ]);
 
 export default function App() {

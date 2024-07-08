@@ -68,7 +68,7 @@ export function Sidebar({ children }) {
                 <span className="text-xs text-gray-600">medico@gmail.com</span>
               </div>
               <span className="bg-gray-300 p-2 rounded-lg	hover:bg-gray-400">
-                <PositionedMenu />
+                <PositionedMenu comingFrom={'patient'}/>
               </span>
             </div>
           </div>
