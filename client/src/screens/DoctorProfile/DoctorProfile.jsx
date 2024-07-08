@@ -37,7 +37,13 @@ const DoctorProfile = ({ comingFrom }) => {
 
   return (
     <Box
-      sx={{ p: 4, bgcolor: "background.paper", boxShadow: 3, borderRadius: 2 }}
+      sx={{
+        m: 4,
+        p: 4,
+        bgcolor: "background.paper",
+        boxShadow: 3,
+        borderRadius: 2,
+      }}
     >
       <Typography variant="h4" gutterBottom className="text-blue-900 mb-2">
         Doctor Profile

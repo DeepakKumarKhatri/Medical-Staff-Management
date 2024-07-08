@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 import React from "react";
-import PatientGrid from "../../components/PatientCard/PatientCard";
+import PatientGrid from "../../components/Cards/PatientCard";
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
