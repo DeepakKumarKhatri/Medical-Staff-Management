@@ -3,16 +3,15 @@ import {
   ChevronFirst,
   ChevronLast,
   Accessibility,
-  PlusCircleIcon,
   ClipboardPlus,
   User,
-  HandHelping,
   ChevronDown,
   ChevronUp,
   Users,
   GraduationCap,
   ShieldCheck,
   MessageSquareText,
+  PlusCircleIcon,
 } from "lucide-react";
 import logo from "../../assets/images/logo/logo.png";
 import profile from "../../assets/images/logo/logo.png";
@@ -179,6 +178,11 @@ const ClinicManagerSidebar = ({ children }) => {
           icon={<ShieldCheck size={16} />}
           text="Clinic Managers"
           to="/clinic_manager/managers"
+        />
+        <SidebarItem
+          icon={<PlusCircleIcon size={16} />}
+          text="Add New"
+          to="/clinic_manager/add_user"
         />
       </SidebarItem>
 

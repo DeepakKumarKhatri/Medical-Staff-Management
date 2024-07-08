@@ -1,8 +1,9 @@
 import React from 'react'
+import ManagerUsers from '../../components/Cards/ManagerUsers'
 
 const Patients = () => {
   return (
-    <div>Patients</div>
+    <ManagerUsers comingFrom={'patients'}/>
   )
 }
 

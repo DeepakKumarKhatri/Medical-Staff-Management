@@ -21,6 +21,18 @@ export const clinic_manager_routes = {
   errorElement: <NotFound />,
   children: [
     {
+      path: "doctors",
+      element: <Doctors />,
+    },
+    {
+      path: "patients",
+      element: <Patients />,
+    },
+    {
+      path: "managers",
+      element: <Clinic_Managers />,
+    },
+    {
       path: "add-doctor",
       element: <AddDoctor comingFrom={"add-doctor"} />,
     },
@@ -43,18 +55,6 @@ export const clinic_manager_routes = {
     {
       path: "update-patient",
       element: <AddPatient comingFrom={"update-patient"} />,
-    },
-    {
-      path: "doctors",
-      element: <Doctors />,
-    },
-    {
-      path: "patients",
-      element: <Patients />,
-    },
-    {
-      path: "managers",
-      element: <Clinic_Managers />,
     },
     {
       path: "feedbacks_doctor",
