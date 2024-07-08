@@ -7,7 +7,6 @@ import DoctorProfile from "../screens/DoctorProfile/DoctorProfile";
 import Help from "../screens/Help/PatientHelp";
 import NotFound from "../screens/NotFound/NotFound";
 import PatientRecord from "../screens/PatientRecord/PatientRecord";
-import ShareInformation from "../screens/ShareInformation/ShareInformation";
 
 export const doctor_routes = {
   path: "/doctor",
@@ -25,10 +24,6 @@ export const doctor_routes = {
     {
       path: "patient-records/:recordID",
       element: <PatientRecordDetail />,
-    },
-    {
-      path: "share-info",
-      element: <ShareInformation />,
     },
     {
       path: "add-patient",
