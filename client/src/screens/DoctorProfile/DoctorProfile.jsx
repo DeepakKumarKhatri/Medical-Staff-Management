@@ -13,18 +13,31 @@ import DepartmentDropdown from "../../components/Dropdown/DepartmentDropdown";
 import GenderDropdown from "../../components/Dropdown/GenderDropdown";
 
 const DoctorProfile = ({ comingFrom }) => {
-  const [firstName, setFirstName] = useState("John");
-  const [lastName, setLastName] = useState("Doe");
-  const [yearsOfExperience, setYearsOfExperience] = useState(10);
-  const [profileImage, setProfileImage] = useState(
-    "https://avatars.githubusercontent.com/u/86526696?v=4"
-  );
+  const [formValues, setFormValues] = useState({
+    firstName: "John",
+    lastName: "Doe",
+    yearsOfExperience: 10,
+    id: "",
+    password: "",
+    profileImage: "https://avatars.githubusercontent.com/u/86526696?v=4",
+  });
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setProfileImage(URL.createObjectURL(e.target.files[0]));
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        profileImage: URL.createObjectURL(e.target.files[0]),
+      }));
     }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
   };
 
   const handleUpdate = () => {
@@ -67,8 +80,9 @@ const DoctorProfile = ({ comingFrom }) => {
                 label="First Name"
                 variant="standard"
                 fullWidth
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                name="firstName"
+                value={formValues.firstName}
+                onChange={handleInputChange}
                 disabled={comingFrom === "profile"}
               />
             </Grid>
@@ -78,8 +92,9 @@ const DoctorProfile = ({ comingFrom }) => {
                 label="Last Name"
                 variant="standard"
                 fullWidth
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                name="lastName"
+                value={formValues.lastName}
+                onChange={handleInputChange}
                 disabled={comingFrom === "profile"}
               />
             </Grid>
@@ -89,20 +104,47 @@ const DoctorProfile = ({ comingFrom }) => {
                 variant="outlined"
                 label="Years of Experience"
                 fullWidth
-                value={yearsOfExperience}
-                onChange={(e) => setYearsOfExperience(e.target.value)}
+                name="yearsOfExperience"
+                value={formValues.yearsOfExperience}
+                onChange={handleInputChange}
                 disabled={comingFrom === "profile"}
               />
             </Grid>
             <Grid item xs={12} sm={4}>
               <DepartmentDropdown comingFrom={comingFrom} />
             </Grid>
+            {/* New Row for ID and Password */}
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="standard-basic"
+                label="ID"
+                variant="standard"
+                fullWidth
+                name="id"
+                value={formValues.id}
+                onChange={handleInputChange}
+                disabled={comingFrom === "profile"}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="standard-basic"
+                label="Password"
+                type="password"
+                variant="standard"
+                fullWidth
+                name="password"
+                value={formValues.password}
+                onChange={handleInputChange}
+                disabled={comingFrom === "profile"}
+              />
+            </Grid>
           </Grid>
         </Grid>
         <Grid item sx={{ textAlign: "center" }}>
           <Avatar
             alt="Doctor Profile"
-            src={profileImage}
+            src={formValues.profileImage}
             sx={{ width: 100, height: 100, mb: 2 }}
           />
           {comingFrom === "edit-profile" && (
