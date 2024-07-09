@@ -69,21 +69,35 @@ const patientSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    avatar: {
+    password: {
       type: String,
       required: true,
     },
+    avatar: {
+      type: String,
+      default: "",
+    },
     gender: {
       type: String,
-      required: true,
+      default: "",
     },
     contact: {
       type: String,
       unique: true,
+      default: "",
     },
-    diseases: [diseaseSchema],
-    submissions: [submissionSchema],
-    systemAccess: systemAccessSchema,
+    diseases: {
+      type: [diseaseSchema],
+      default: [],
+    },
+    submissions: {
+      type: [submissionSchema],
+      default: [],
+    },
+    systemAccess: {
+      type: systemAccessSchema,
+      default: () => ({}),
+    },
   },
   { timestamps: true }
 );
