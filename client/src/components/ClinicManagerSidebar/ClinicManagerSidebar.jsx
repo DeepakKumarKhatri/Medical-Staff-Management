@@ -19,7 +19,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PositionedMenu from "../Dropdown/Dropdown";
 import { useEscapeToggle } from "../../hooks/useEscapeToggle";
 
-const SidebarContext = createContext();
+export const SidebarContext = createContext();
 
 export function Sidebar({ children }) {
   const [expanded, setExpanded] = useState(true);

@@ -1,39 +1,63 @@
-import React from 'react';
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Grid, TextField, Button, Typography, Snackbar, Alert } from '@mui/material';
+import CredentialsGenerator from '../Generals/CredentialsGenerator';
+import ImageInput from '../Generals/ImageInput';
 
 const AddClinicManager = () => {
-  // Add state and handlers for Clinic Manager form fields
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [profileImage, setProfileImage] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission
+  const handleUpdate = () => {
+    setOpenSnackbar(true);
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 4 }}>
-      <Typography variant="h6" gutterBottom className="text-blue-900 mb-2">
+    <Box sx={{ m: 4, p: 4, bgcolor: 'background.paper', boxShadow: 3, borderRadius: 2 }}>
+      <Typography variant="h4" gutterBottom>
         Add Clinic Manager
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField required label="First Name" fullWidth />
+        <Grid item xs={12} sm={4}>
+          <TextField
+            label="First Name"
+            variant="standard"
+            fullWidth
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField required label="Last Name" fullWidth />
+        <Grid item xs={12} sm={4}>
+          <TextField
+            label="Last Name"
+            variant="standard"
+            fullWidth
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField required label="Email" fullWidth />
+        <Grid item xs={12}>
+          <CredentialsGenerator />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField required label="ID" fullWidth />
+        <Grid item xs={12}>
+          <ImageInput profileImage={profileImage} setProfileImage={setProfileImage} />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField required label="Password" type="password" fullWidth />
+        <Grid item xs={12}>
+          <Button variant="contained" color="primary" onClick={handleUpdate}>
+            Add Clinic Manager
+          </Button>
         </Grid>
       </Grid>
-      <Button type="submit" variant="contained" color="primary" sx={{ mt: 3 }}>
-        Add Clinic Manager
-      </Button>
+      <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="success">
+        Clinic Manager added successfully!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

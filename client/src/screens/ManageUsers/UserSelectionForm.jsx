@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { MenuItem, Select, FormControl, InputLabel, Box } from '@mui/material';
-import AddClinicManager from '../../components/ClinicManagerUsers/AddClinicManager';
-import AddDoctor from '../../components/ClinicManagerUsers/AddDoctor';
-import AddPatient from '../../components/ClinicManagerUsers/AddPatient';
+import React, { useState } from "react";
+import { MenuItem, Select, FormControl, InputLabel, Box } from "@mui/material";
+import AddClinicManager from "../../components/ClinicManagerUsers/AddClinicManager";
+import AddDoctor from "../../components/ClinicManagerUsers/AddDoctor";
+import AddPatient from "../../components/ClinicManagerUsers/AddPatient";
 
 const UserSelectionForm = () => {
-  const [userType, setUserType] = useState('');
+  const [userType, setUserType] = useState("Patient");
 
   const handleChange = (event) => {
     setUserType(event.target.value);
@@ -13,11 +13,11 @@ const UserSelectionForm = () => {
 
   const renderForm = () => {
     switch (userType) {
-      case 'Doctor':
+      case "Doctor":
         return <AddDoctor />;
-      case 'Patient':
+      case "Patient":
         return <AddPatient />;
-      case 'Clinic Manager':
+      case "Clinic Manager":
         return <AddClinicManager />;
       default:
         return null;
