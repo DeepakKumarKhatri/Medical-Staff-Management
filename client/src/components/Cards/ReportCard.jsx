@@ -27,29 +27,26 @@ const ReportCard = ({ patient }) => {
           src={patient.photo}
           sx={{ width: 64, height: 64, margin: "0 auto 8px" }}
         />
-        <Typography variant="h6" gutterBottom>
-          {patient.name}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" gutterBottom>
-          ID: {patient.id}
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            mt: 2,
-          }}
-        >
+        <div className="flex justify-between">
+          <div className="flex flex-col">
+            <Typography variant="h6">{patient.name}</Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              className="text-left"
+            >
+              ID: {patient.id}
+            </Typography>
+          </div>
           <IconButton
             sx={{
               transition: "transform 0.3s",
-              "&:hover": { transform: "scale(1.2)" },
+              "&:hover": { transform: "scale(1.1)" },
             }}
           >
             <Download />
           </IconButton>
-        </Box>
+        </div>
       </CardContent>
     </Card>
   );
