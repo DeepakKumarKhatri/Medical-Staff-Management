@@ -4,7 +4,7 @@ import SidebarLayout from "../components/Layouts/SidebarLayout";
 import PatientRecordDetail from "../components/MedicalRecords/PatientRecordDetail";
 import DoctorPatients from "../screens/DoctorPatients/DoctorPatients";
 import DoctorProfile from "../screens/DoctorProfile/DoctorProfile";
-import Help from "../screens/Help/PatientHelp";
+import Help from "../screens/Help/Help";
 import NotFound from "../screens/NotFound/NotFound";
 import PatientRecord from "../screens/PatientRecord/PatientRecord";
 

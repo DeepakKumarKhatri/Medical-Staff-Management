@@ -2,7 +2,7 @@ import InstructionsDetail from "../components/Instructions/InstructionsDetail";
 import SidebarLayout from "../components/Layouts/SidebarLayout";
 import PatientSidebarCaller from "../components/PatientSidebar/PatientSidebar";
 import TreatmentDetail from "../components/Treatment/TreatmentDetail";
-import Help from "../screens/Help/PatientHelp";
+import Help from "../screens/Help/Help";
 import NotFound from "../screens/NotFound/NotFound";
 import PatientInstructions from "../screens/PatientInstructions/PatientInstructions";
 import PatientProfile from "../screens/PatientProfile/PatientProfile";
