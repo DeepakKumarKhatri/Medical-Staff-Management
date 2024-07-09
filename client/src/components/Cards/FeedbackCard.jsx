@@ -8,10 +8,16 @@ import {
   Box,
   Rating,
   Tooltip,
+  IconButton,
 } from "@mui/material";
+import { Download } from "lucide-react";
 import { labels } from "../../constants/RatingLabels";
 
 const FeedbackCard = ({ feedback }) => {
+  const handleDownloadClick = () => {
+    console.log("Generating PDF for feedback:", feedback);
+  };
+
   return (
     <Card
       sx={{ maxWidth: 600, margin: "16px auto", boxShadow: 3, borderRadius: 2 }}
@@ -54,6 +60,21 @@ const FeedbackCard = ({ feedback }) => {
                 </Typography>
               </Box>
             )}
+          </Grid>
+          <Grid item xs={12} sx={{ textAlign: "right" }}>
+            <Tooltip title="Download PDF">
+              <IconButton
+                onClick={handleDownloadClick}
+                sx={{
+                  transition: "transform 0.3s",
+                  "&:hover": {
+                    transform: "scale(1.2)",
+                  },
+                }}
+              >
+                <Download size={24} />
+              </IconButton>
+            </Tooltip>
           </Grid>
         </Grid>
       </CardContent>
