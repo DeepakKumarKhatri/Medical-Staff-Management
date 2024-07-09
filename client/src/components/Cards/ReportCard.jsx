@@ -6,7 +6,6 @@ import {
   Avatar,
   Typography,
   IconButton,
-  Box,
 } from "@mui/material";
 import { Download } from "lucide-react";
 

@@ -9,7 +9,6 @@ import {
   Alert,
   Avatar,
 } from "@mui/material";
-import ImageInput from "../../components/Generals/ImageInput";
 
 const ClinicManagerProfile = ({ comingFrom }) => {
   const [firstName, setFirstName] = useState("");
