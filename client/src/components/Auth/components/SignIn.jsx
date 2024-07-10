@@ -17,21 +17,13 @@ import { userLogin } from "../authSlice";
 export default function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, data, isError } = useSelector((state) => state.auth);
+  const { isLoading, data, isError, errorMessage } = useSelector((state) => state.auth);
   const [userData, setUserData] = useState({ userId: "", password: "" });
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "",
-  });
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "" });
 
   useEffect(() => {
     if (data && data.message === "User Found") {
-      setSnackbar({
-        open: true,
-        message: "Login successful",
-        severity: "success",
-      });
+      setSnackbar({ open: true, message: "Login successful", severity: "success" });
 
       if (data.data.systemAccess.userRole === "patient") {
         navigate("/patient/treatments");
@@ -41,13 +33,9 @@ export default function SignIn() {
         navigate("/clinic_manager/doctors");
       }
     } else if (isError) {
-      setSnackbar({
-        open: true,
-        message: "Invalid credentials",
-        severity: "error",
-      });
+      setSnackbar({ open: true, message: errorMessage, severity: "error" });
     }
-  }, [data, isError, navigate]);
+  }, [data, isError, errorMessage, navigate]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -136,16 +124,8 @@ export default function SignIn() {
           </Grid>
         </Grid>
       </Box>
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: "100%" }}
-        >
+      <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: "100%" }}>
           {snackbar.message}
         </Alert>
       </Snackbar>
