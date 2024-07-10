@@ -38,6 +38,11 @@ const systemAccessSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  userRole: {
+    type: String,
+    required: true,
+    enum: ["patient", "doctor", "clinic_manager"],
+  },
 });
 
 const submissionSchema = new mongoose.Schema(
