@@ -6,6 +6,7 @@ var logger = require("morgan");
 var cors = require("cors");
 
 var patientRouter = require("./routes/patient");
+var clinicManagerRouter = require("./routes/clinic_manager");
 var authRouter = require("./routes/auth");
 const { connectMongoDB } = require("./database/connection");
 require("dotenv").config();
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/auth", authRouter);
 app.use("/api/patient", patientRouter);
+app.use("/api/clinic_manager", clinicManagerRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

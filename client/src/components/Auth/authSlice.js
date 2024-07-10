@@ -2,15 +2,16 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { server_url } from "../../constants/server_url";
 
 export const userLogin = createAsyncThunk(
-  "userLogin",
+  "auth/userLogin",
   async (userData, thunkAPI) => {
     try {
       const response = await fetch(`${server_url}/api/auth/login`, {
         method: "POST",
         body: JSON.stringify(userData),
         headers: {
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
         },
+        credentials: "include",
       });
       if (!response.ok) {
         const error = await response.json();
@@ -24,14 +25,14 @@ export const userLogin = createAsyncThunk(
 );
 
 export const userSignUp = createAsyncThunk(
-  "userSignUp",
+  "auth/userSignUp",
   async (userData, thunkAPI) => {
     try {
       const response = await fetch(`${server_url}/api/patient/register`, {
         method: "POST",
         body: JSON.stringify(userData),
         headers: {
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
         },
       });
       if (!response.ok) {
@@ -49,14 +50,20 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     isLoading: false,
-    data: null,
+    user: null,
     isError: false,
     errorMessage: "",
+  },
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+      document.cookie = "token=; Max-Age=0; path=/;"; // Clear the cookie
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(userLogin.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.data = action.payload;
+      state.user = action.payload.data;
       state.isError = false;
       state.errorMessage = "";
     });
@@ -72,7 +79,7 @@ const authSlice = createSlice({
     });
     builder.addCase(userSignUp.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.data = action.payload;
+      state.user = action.payload.data;
       state.isError = false;
       state.errorMessage = "";
     });
@@ -89,4 +96,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

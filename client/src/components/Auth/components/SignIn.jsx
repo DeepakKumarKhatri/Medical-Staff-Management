@@ -17,25 +17,35 @@ import { userLogin } from "../authSlice";
 export default function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, data, isError, errorMessage } = useSelector((state) => state.auth);
+  const { isLoading, user, isError, errorMessage } = useSelector(
+    (state) => state.auth
+  );
   const [userData, setUserData] = useState({ userId: "", password: "" });
-  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "" });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
 
   useEffect(() => {
-    if (data && data.message === "User Found") {
-      setSnackbar({ open: true, message: "Login successful", severity: "success" });
+    if (user) {
+      setSnackbar({
+        open: true,
+        message: "Login successful",
+        severity: "success",
+      });
 
-      if (data.data.systemAccess.userRole === "patient") {
+      if (user.systemAccess.userRole === "patient") {
         navigate("/patient/treatments");
-      } else if (data.data.systemAccess.userRole === "doctor") {
+      } else if (user.systemAccess.userRole === "doctor") {
         navigate("/doctor/patient-records");
-      } else if (data.data.systemAccess.userRole === "clinic_manager") {
+      } else if (user.systemAccess.userRole === "clinic_manager") {
         navigate("/clinic_manager/doctors");
       }
     } else if (isError) {
       setSnackbar({ open: true, message: errorMessage, severity: "error" });
     }
-  }, [data, isError, errorMessage, navigate]);
+  }, [user, isError, errorMessage, navigate]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -124,8 +134,16 @@ export default function SignIn() {
           </Grid>
         </Grid>
       </Box>
-      <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: "100%" }}>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
           {snackbar.message}
         </Alert>
       </Snackbar>
