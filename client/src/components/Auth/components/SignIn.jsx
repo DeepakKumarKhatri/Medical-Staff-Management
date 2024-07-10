@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -8,16 +9,58 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { CircularProgress, Snackbar, Alert } from "@mui/material";
+import { userLogin } from "../authSlice";
 
 export default function SignIn() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoading, data, isError } = useSelector((state) => state.auth);
+  const [userData, setUserData] = useState({ userId: "", password: "" });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
+
+  useEffect(() => {
+    if (data && data.message === "User Found") {
+      setSnackbar({
+        open: true,
+        message: "Login successful",
+        severity: "success",
+      });
+
+      if (data.data.systemAccess.userRole === "patient") {
+        navigate("/patient/treatments");
+      } else if (data.data.systemAccess.userRole === "doctor") {
+        navigate("/doctor/patient-records");
+      } else if (data.data.systemAccess.userRole === "clinic_manager") {
+        navigate("/clinic_manager/doctors");
+      }
+    } else if (isError) {
+      setSnackbar({
+        open: true,
+        message: "Invalid credentials",
+        severity: "error",
+      });
+    }
+  }, [data, isError, navigate]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    dispatch(userLogin(userData));
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUserData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
 
   return (
@@ -43,9 +86,11 @@ export default function SignIn() {
           fullWidth
           id="email"
           label="Your ID"
-          name="email"
+          name="userId"
           autoComplete="email"
           autoFocus
+          onChange={handleChange}
+          value={userData.userId}
         />
         <TextField
           margin="normal"
@@ -56,6 +101,8 @@ export default function SignIn() {
           type="password"
           id="password"
           autoComplete="current-password"
+          onChange={handleChange}
+          value={userData.password}
         />
         <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}
@@ -71,8 +118,9 @@ export default function SignIn() {
             backgroundColor: "#F4A261",
             "&:hover": { backgroundColor: "#E76F51" },
           }}
+          disabled={isLoading}
         >
-          Sign In
+          {isLoading ? <CircularProgress size={24} /> : "Sign In"}
         </Button>
         <Grid container>
           <Grid item>
@@ -88,6 +136,19 @@ export default function SignIn() {
           </Grid>
         </Grid>
       </Box>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

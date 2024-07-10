@@ -1,6 +1,6 @@
 import AuthLayout from "./components/Layouts/AuthLayout";
-import SignIn from "./components/SignIn/SignIn";
-import SignUp from "./components/SignUp/SignUp";
+import SignUp from "./components/Auth/components/SignUp";
+import SignIn from "./components/Auth/components/SignIn";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NotFound from "./screens/NotFound/NotFound";
 import { patient_routes } from "./routes/PatientRoutes";
