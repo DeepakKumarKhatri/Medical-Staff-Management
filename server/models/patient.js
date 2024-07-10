@@ -88,7 +88,6 @@ const patientSchema = new mongoose.Schema(
     },
     contact: {
       type: String,
-      unique: true,
       default: "",
     },
     diseases: {

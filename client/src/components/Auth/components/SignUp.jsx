@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,16 +9,54 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { CircularProgress, Snackbar, Alert } from "@mui/material";
+import { userSignUp } from "../authSlice";
 
 export default function SignUp() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoading, data, isError, errorMessage } = useSelector(
+    (state) => state.auth
+  );
+  const [userData, setUserData] = useState({
+    firstName: "",
+    lastName: "",
+    userId: "",
+    password: "",
+  });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
+
+  useEffect(() => {
+    if (data && data.message === "Patient registered successfully") {
+      setSnackbar({
+        open: true,
+        message: "Registration successful",
+        severity: "success",
+      });
+      navigate("/");
+    } else if (isError) {
+      setSnackbar({ open: true, message: errorMessage, severity: "error" });
+    }
+  }, [data, isError, errorMessage, navigate]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    dispatch(userSignUp(userData));
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUserData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
 
   return (
@@ -48,6 +87,8 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={handleChange}
+                value={userData.firstName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -58,16 +99,20 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
+                onChange={handleChange}
+                value={userData.lastName}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 required
                 fullWidth
-                id="email"
+                id="userId"
                 label="User ID"
-                name="email"
-                autoComplete="email"
+                name="userId"
+                autoComplete="userId"
+                onChange={handleChange}
+                value={userData.userId}
               />
             </Grid>
             <Grid item xs={12}>
@@ -79,6 +124,8 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                onChange={handleChange}
+                value={userData.password}
               />
             </Grid>
           </Grid>
@@ -92,8 +139,9 @@ export default function SignUp() {
               backgroundColor: "#F4A261",
               "&:hover": { backgroundColor: "#E76F51" },
             }}
+            disabled={isLoading}
           >
-            Sign Up
+            {isLoading ? <CircularProgress size={24} /> : "Sign Up"}
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
@@ -109,6 +157,19 @@ export default function SignUp() {
             </Grid>
           </Grid>
         </Box>
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackbar}
+        >
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity={snackbar.severity}
+            sx={{ width: "100%" }}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
       </Box>
     </Container>
   );
