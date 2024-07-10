@@ -4,7 +4,8 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-var patientRouter = require("./routes/patient")
+var patientRouter = require("./routes/patient");
+var authRouter = require("./routes/auth");
 const { connectMongoDB } = require("./database/connection");
 require("dotenv").config();
 
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use("/api/auth", authRouter);
 app.use("/api/patient", patientRouter);
 
 // catch 404 and forward to error handler

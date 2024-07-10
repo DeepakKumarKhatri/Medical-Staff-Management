@@ -101,7 +101,7 @@ const patientSchema = new mongoose.Schema(
     },
     systemAccess: {
       type: systemAccessSchema,
-      default: () => ({}),
+      default: () => ({ userRole: "patient" }),
     },
   },
   { timestamps: true }

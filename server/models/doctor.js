@@ -51,23 +51,24 @@ const doctorSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      required: true,
+      default: "",
     },
     gender: {
       type: String,
-      required: true,
+      default: "",
     },
     yearsOfExperience: {
       type: Number,
-      required: true,
+      default: 0,
     },
     department: {
       type: String,
-      required: true,
+      default: "",
     },
     contact: {
       type: String,
       unique: true,
+      default: "",
     },
     patients: {
       type: [
@@ -75,12 +76,19 @@ const doctorSchema = new mongoose.Schema(
           patient: {
             type: mongoose.Types.ObjectId,
             ref: "Patient",
+            default: [],
           },
         },
       ],
     },
-    submissions: [submissionSchema],
-    systemAccess: systemAccessSchema,
+    submissions: {
+      type: [submissionSchema],
+      default: [],
+    },
+    systemAccess: {
+      type: systemAccessSchema,
+      default: () => ({ userRole: "doctor" }),
+    },
   },
   { timestamps: true }
 );

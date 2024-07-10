@@ -37,9 +37,12 @@ const clinicManagerSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      required: true,
+      default: "",
     },
-    systemAccess: systemAccessSchema,
+    systemAccess:  {
+      type: systemAccessSchema,
+      default: () => ({ userRole: "clinic_manager" }),
+    },
   },
   { timestamps: true }
 );

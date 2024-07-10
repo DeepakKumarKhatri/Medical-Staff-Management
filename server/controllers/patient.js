@@ -5,7 +5,6 @@ const signUpPatient = async (req, res) => {
   const { firstName, lastName, userId, password } = req.body;
 
   try {
-
     const hashedPassword = await bcrypt.hash(password, 10);
     const newPatient = new Patient({
       firstName,
@@ -17,6 +16,7 @@ const signUpPatient = async (req, res) => {
       contact: "",
       diseases: [],
       submissions: [],
+      systemAccess: { userRole: "patient" },
     });
 
     const patient = await newPatient.save();
