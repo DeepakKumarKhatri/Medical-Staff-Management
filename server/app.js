@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var cors = require("cors");
 
 var patientRouter = require("./routes/patient");
 var authRouter = require("./routes/auth");
@@ -13,6 +14,14 @@ var app = express();
 
 // Connect to MongoDB
 connectMongoDB(process.env.DEV_DATABASE_URL);
+
+app.use(
+  cors({
+    origin: process.env.CLIENT_ACCESS,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
 
 app.use(logger("dev"));
 app.use(express.json());
