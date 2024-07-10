@@ -30,6 +30,11 @@ const signUpPatient = async (req, res) => {
   }
 };
 
+const demoMethod = async (req, res) => {
+  res.end("I'm inside Demo Method");
+};
+
 module.exports = {
   signUpPatient,
+  demoMethod,
 };
