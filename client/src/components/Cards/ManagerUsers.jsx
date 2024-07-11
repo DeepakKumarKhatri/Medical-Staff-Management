@@ -13,6 +13,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 const columns = [
   { id: "name", label: "Name", minWidth: 170 },
@@ -21,33 +23,16 @@ const columns = [
   { id: "actions", label: "Actions", minWidth: 100 },
 ];
 
-function createData(name, contact, role) {
-  return { name, contact, role };
-}
-
-const rows = [
-  createData(
-    { name: "John Doe", image: "path_to_image" },
-    "john.doe@example.com",
-    "Doctor"
-  ),
-  createData(
-    { name: "Jane Smith", image: "path_to_image" },
-    "jane.smith@example.com",
-    "Clinic Manager"
-  ),
-  createData(
-    { name: "Alice Johnson", image: "path_to_image" },
-    "alice.johnson@example.com",
-    "Patient"
-  ),
-];
-
-export default function ManagerUsers({ comingFrom }) {
+export default function ManagerUsers({ comingFrom, data }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [rows, setRows] = React.useState([]);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    decideFetch();
+  }, [comingFrom, data]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -67,14 +52,55 @@ export default function ManagerUsers({ comingFrom }) {
   };
 
   const handleEdit = (id) => {
-    // Navigate to the edit page
     navigate(`/edit-user/${id}`);
     handleMenuClose();
   };
 
   const handleDelete = (id) => {
-    // Handle delete logic here
+    console.log({ data });
     handleMenuClose();
+  };
+
+  const decideFetch = () => {
+    let fetchedRows = [];
+    switch (comingFrom) {
+      case "clinic_manager":
+        fetchedRows = data?.clinicManagers?.map((manager) => ({
+          name: {
+            name: `${manager.firstName} ${manager.lastName}`,
+            image: manager.avatar,
+          },
+          contact: manager.userId,
+          role: "Clinic Manager",
+          id: manager._id,
+        }));
+        break;
+      case "doctor":
+        fetchedRows = data?.doctors?.map((manager) => ({
+          name: {
+            name: `${manager.firstName} ${manager.lastName}`,
+            image: manager.avatar,
+          },
+          contact: manager.userId,
+          role: "Doctor",
+          id: manager._id,
+        }));
+        break;
+      case "patient":
+        fetchedRows = data?.patients?.map((manager) => ({
+          name: {
+            name: `${manager.firstName} ${manager.lastName}`,
+            image: manager.avatar,
+          },
+          contact: manager.userId,
+          role: "Patient",
+          id: manager._id,
+        }));
+        break;
+      default:
+        break;
+    }
+    setRows(fetchedRows);
   };
 
   return (
@@ -95,11 +121,11 @@ export default function ManagerUsers({ comingFrom }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+            {rows?.length > 0 ? (
+              rows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row) => (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       if (column.id === "name") {
@@ -131,10 +157,10 @@ export default function ManagerUsers({ comingFrom }) {
                               open={Boolean(anchorEl)}
                               onClose={handleMenuClose}
                             >
-                              <MenuItem onClick={() => handleEdit(index)}>
+                              <MenuItem onClick={() => handleEdit(row.id)}>
                                 Edit
                               </MenuItem>
-                              <MenuItem onClick={() => handleDelete(index)}>
+                              <MenuItem onClick={() => handleDelete(row.id)}>
                                 Delete
                               </MenuItem>
                             </Menu>
@@ -144,20 +170,32 @@ export default function ManagerUsers({ comingFrom }) {
                       return null;
                     })}
                   </TableRow>
-                );
-              })}
+                ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} align="center">
+                  <Box py={3}>
+                    <Typography variant="h6" color="textSecondary">
+                      No data is available at this moment.
+                    </Typography>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      {rows?.length > 0 && (
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      )}
     </Paper>
   );
 }

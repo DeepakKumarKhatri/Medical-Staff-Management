@@ -70,17 +70,15 @@ const doctorSchema = new mongoose.Schema(
       unique: true,
       default: "",
     },
-    patients: {
-      type: [
-        {
-          patient: {
-            type: mongoose.Types.ObjectId,
-            ref: "Patient",
-            default: [],
-          },
+    patients: [
+      {
+        patient: {
+          type: mongoose.Types.ObjectId,
+          ref: "Patient",
+          default: [],
         },
-      ],
-    },
+      },
+    ],
     submissions: {
       type: [submissionSchema],
       default: [],
