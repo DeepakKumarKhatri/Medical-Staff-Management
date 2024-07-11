@@ -8,5 +8,8 @@ router.post("/register", clinicManagerController.signUpClinicManager);
 router.get("/doctors", clinicManagerController.getDoctors);
 router.get("/clinic_managers", clinicManagerController.getClinicManagers);
 router.get("/patients", clinicManagerController.getPatients);
+router.delete("/doctors", clinicManagerController.deleteDoctor);
+router.delete("/clinic_managers", clinicManagerController.deleteClinicManager);
+router.delete("/patients", clinicManagerController.deletePatient);
 
 module.exports = router;
