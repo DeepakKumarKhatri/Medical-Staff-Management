@@ -76,25 +76,25 @@ export default function ManagerUsers({ comingFrom, data }) {
         }));
         break;
       case "doctor":
-        fetchedRows = data?.doctors?.map((manager) => ({
+        fetchedRows = data?.doctors?.map((doctor) => ({
           name: {
-            name: `${manager.firstName} ${manager.lastName}`,
-            image: manager.avatar,
+            name: `${doctor.firstName} ${doctor.lastName}`,
+            image: doctor.avatar,
           },
-          contact: manager.userId,
+          contact: doctor.userId,
           role: "Doctor",
-          id: manager._id,
+          id: doctor._id,
         }));
         break;
       case "patient":
-        fetchedRows = data?.patients?.map((manager) => ({
+        fetchedRows = data?.patients?.map((patient) => ({
           name: {
-            name: `${manager.firstName} ${manager.lastName}`,
-            image: manager.avatar,
+            name: `${patient.firstName} ${patient.lastName}`,
+            image: patient.avatar,
           },
-          contact: manager.userId,
+          contact: patient.userId,
           role: "Patient",
-          id: manager._id,
+          id: patient._id,
         }));
         break;
       default:

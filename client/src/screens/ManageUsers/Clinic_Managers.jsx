@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getClinicManagers } from "./manageUsersSlice";
-import ManagerUsers from "../../components/Cards/ManagerUsers"; 
+import ManagerUsers from "../../components/Cards/ManagerUsers";
 import Header from "../../components/Generals/Header";
+import SkeletonTable from "../../components/Skeletons/SkeletonTable";
 
 const Clinic_Managers = () => {
   const dispatch = useDispatch();
@@ -24,11 +25,11 @@ const Clinic_Managers = () => {
       />
       <>
         {isLoading ? (
-          <p>Loading...</p>
+          <SkeletonTable />
         ) : isError ? (
           <p>{errorMessage}</p>
         ) : (
-          <ManagerUsers comingFrom={'clinic_manager'} data={clinicManagers} />
+          <ManagerUsers comingFrom={"clinic_manager"} data={clinicManagers} />
         )}
       </>
     </div>
