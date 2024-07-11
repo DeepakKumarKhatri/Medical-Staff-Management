@@ -15,6 +15,12 @@ import { MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { useDispatch } from "react-redux";
+import {
+  deleteDoctor,
+  deleteClinicManager,
+  deletePatient,
+} from "../../screens/ManageUsers/manageUsersSlice";
 
 const columns = [
   { id: "name", label: "Name", minWidth: 170 },
@@ -27,8 +33,10 @@ export default function ManagerUsers({ comingFrom, data }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [selectedRow, setSelectedRow] = React.useState(null);
   const [rows, setRows] = React.useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     decideFetch();
@@ -43,12 +51,14 @@ export default function ManagerUsers({ comingFrom, data }) {
     setPage(0);
   };
 
-  const handleMenuClick = (event) => {
+  const handleMenuClick = (event, row) => {
     setAnchorEl(event.currentTarget);
+    setSelectedRow(row);
   };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    setSelectedRow(null);
   };
 
   const handleEdit = (id) => {
@@ -57,7 +67,25 @@ export default function ManagerUsers({ comingFrom, data }) {
   };
 
   const handleDelete = (id) => {
-    console.log({ data });
+    switch (comingFrom) {
+      case "clinic_manager":
+        dispatch(deleteClinicManager(id)).then(() => {
+          setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+        });
+        break;
+      case "doctor":
+        dispatch(deleteDoctor(id)).then(() => {
+          setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+        });
+        break;
+      case "patient":
+        dispatch(deletePatient(id)).then(() => {
+          setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+        });
+        break;
+      default:
+        break;
+    }
     handleMenuClose();
   };
 
@@ -73,7 +101,7 @@ export default function ManagerUsers({ comingFrom, data }) {
           contact: manager.userId,
           role: "Clinic Manager",
           id: manager._id,
-        }));
+        })) || [];
         break;
       case "doctor":
         fetchedRows = data?.doctors?.map((doctor) => ({
@@ -84,7 +112,7 @@ export default function ManagerUsers({ comingFrom, data }) {
           contact: doctor.userId,
           role: "Doctor",
           id: doctor._id,
-        }));
+        })) || [];
         break;
       case "patient":
         fetchedRows = data?.patients?.map((patient) => ({
@@ -95,7 +123,7 @@ export default function ManagerUsers({ comingFrom, data }) {
           contact: patient.userId,
           role: "Patient",
           id: patient._id,
-        }));
+        })) || [];
         break;
       default:
         break;
@@ -149,12 +177,14 @@ export default function ManagerUsers({ comingFrom, data }) {
                       } else if (column.id === "actions") {
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            <IconButton onClick={handleMenuClick}>
+                            <IconButton
+                              onClick={(event) => handleMenuClick(event, row)}
+                            >
                               <MoreVertical size={20} />
                             </IconButton>
                             <Menu
                               anchorEl={anchorEl}
-                              open={Boolean(anchorEl)}
+                              open={Boolean(anchorEl && selectedRow === row)}
                               onClose={handleMenuClose}
                             >
                               <MenuItem onClick={() => handleEdit(row.id)}>

@@ -93,7 +93,7 @@ export const deleteDoctor = createAsyncThunk(
         return thunkAPI.rejectWithValue(error);
       }
       const data = await response.json();
-      return { data };
+      return { doctor: data };
     } catch (error) {
       return thunkAPI.rejectWithValue({ message: "Network error" });
     }
@@ -120,7 +120,7 @@ export const deleteClinicManager = createAsyncThunk(
         return thunkAPI.rejectWithValue(error);
       }
       const data = await response.json();
-      return { data };
+      return { clinicManager: data };
     } catch (error) {
       return thunkAPI.rejectWithValue({ message: "Network error" });
     }
@@ -147,7 +147,7 @@ export const deletePatient = createAsyncThunk(
         return thunkAPI.rejectWithValue(error);
       }
       const data = await response.json();
-      return { data };
+      return { patient: data };
     } catch (error) {
       return thunkAPI.rejectWithValue({ message: "Network error" });
     }
@@ -168,7 +168,7 @@ const manageUsersSlice = createSlice({
     builder
       .addCase(getDoctors.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.doctors = action.payload.doctors;
+        state.doctors = action.payload.doctors || [];
         state.isError = false;
         state.errorMessage = "";
       })
@@ -187,7 +187,7 @@ const manageUsersSlice = createSlice({
     builder
       .addCase(getPatients.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.patients = action.payload.patients;
+        state.patients = action.payload.patients || [];
         state.isError = false;
         state.errorMessage = "";
       })
@@ -206,7 +206,7 @@ const manageUsersSlice = createSlice({
     builder
       .addCase(getClinicManagers.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.clinicManagers = action.payload.clinicManagers;
+        state.clinicManagers = action.payload.clinicManagers || [];
         state.isError = false;
         state.errorMessage = "";
       })
@@ -230,9 +230,11 @@ const manageUsersSlice = createSlice({
       })
       .addCase(deleteDoctor.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.doctors = state.doctors.filter(
-          (doctor) => doctor._id !== action.payload.data.doctor._id
-        );
+        if (Array.isArray(state.doctors)) {
+          state.doctors = state.doctors.filter(
+            (doctor) => doctor._id !== action.payload.data.doctor._id
+          );
+        }
       })
       .addCase(deleteDoctor.rejected, (state, action) => {
         state.isLoading = false;
@@ -248,9 +250,11 @@ const manageUsersSlice = createSlice({
       })
       .addCase(deleteClinicManager.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.clinicManagers = state.clinicManagers.filter(
-          (manager) => manager._id !== action.payload.data.clinicManager._id
-        );
+        if (Array.isArray(state.clinicManagers)) {
+          state.clinicManagers = state.clinicManagers.filter(
+            (manager) => manager._id !== action.payload.data.clinicManager._id
+          );
+        }
       })
       .addCase(deleteClinicManager.rejected, (state, action) => {
         state.isLoading = false;
@@ -266,9 +270,11 @@ const manageUsersSlice = createSlice({
       })
       .addCase(deletePatient.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.patients = state.patients.filter(
-          (patient) => patient._id !== action.payload.data.patient._id
-        );
+        if (Array.isArray(state.patients)) {
+          state.patients = state.patients.filter(
+            (patient) => patient._id !== action.payload.data.patient._id
+          );
+        }
       })
       .addCase(deletePatient.rejected, (state, action) => {
         state.isLoading = false;
