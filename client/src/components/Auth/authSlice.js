@@ -57,7 +57,10 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
-      document.cookie = "token=; Max-Age=0; path=/;"; // Clear the cookie
+      document.cookie = "token=; Max-Age=0; path=/;";
+    },
+    setUserFromToken: (state, action) => {
+      state.user = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -96,5 +99,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setUserFromToken } = authSlice.actions;
 export default authSlice.reducer;

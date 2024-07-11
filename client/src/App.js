@@ -26,6 +26,11 @@ import Unauthorized from "./screens/Unauthoried/Unauthoried";
 import PatientDashboard from "./screens/Dashboards/PatientDashboard";
 import DoctorDashboard from "./screens/Dashboards/DoctorDashboard";
 import ClinicManagerDashboard from "./screens/Dashboards/ClinicManagerDashboard";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setUserFromToken } from "./components/Auth/authSlice";
+import { getCookie } from "./lib/cookieUtils";
+import { jwtDecode } from "jwt-decode";
 
 const router = createBrowserRouter([
   {
@@ -53,11 +58,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "treatments",
-        element: <PatientTreatment />,
+        element: (
+          <ProtectedRoute component={PatientTreatment} forUser="patient" />
+        ),
       },
       {
         path: "instructions",
-        element: <PatientInstructions />,
+        element: (
+          <ProtectedRoute component={PatientInstructions} forUser="patient" />
+        ),
       },
       {
         path: "help",
@@ -118,7 +127,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/clinic_manager",
-    element: <ProtectedRoute component={ClinicManagerDashboard} forUser="clinic_manager" />,
+    element: (
+      <ProtectedRoute
+        component={ClinicManagerDashboard}
+        forUser="clinic_manager"
+      />
+    ),
     errorElement: <NotFound />,
     children: [
       {
@@ -166,5 +180,18 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const token = getCookie("token");
+    if (token) {
+      try {
+        const user = jwtDecode(token);
+        dispatch(setUserFromToken(user));
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+  }, [dispatch]);
+
   return <RouterProvider router={router} />;
 }

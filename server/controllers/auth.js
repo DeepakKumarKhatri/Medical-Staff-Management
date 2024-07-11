@@ -37,16 +37,18 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Invalid password" });
     }
 
+    const userWithoutPassword = { ...user.toObject() };
+    delete userWithoutPassword.password;
+
     const accessToken = await generateAccessToken({ user: user });
 
     res.cookie("token", accessToken, {
-      httpOnly: true,
       secure: true,
       sameSite: "Strict",
     });
     res.status(200).json({
       message: "User Found",
-      data: user,
+      data: userWithoutPassword,
       tokenType: "Bearer",
     });
   } catch (err) {

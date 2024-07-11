@@ -4,11 +4,19 @@ import MenuItem from "@mui/material/MenuItem";
 import { MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { decidePath } from "../../constants/SidebarPaths";
+import { useDispatch } from "react-redux";
+import { logout } from "../Auth/authSlice";
 
 export default function PositionedMenu({ comingFrom }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -45,7 +53,7 @@ export default function PositionedMenu({ comingFrom }) {
       >
         <MenuItem
           onClick={() => {
-            navigate("/");
+            handleLogout();
             handleClose();
           }}
         >

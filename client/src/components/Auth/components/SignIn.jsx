@@ -35,11 +35,20 @@ export default function SignIn() {
         severity: "success",
       });
 
-      if (user.systemAccess.userRole === "patient") {
+      if (
+        user?.userRole === "patient" ||
+        user?.systemAccess?.userRole === "patient"
+      ) {
         navigate("/patient/treatments");
-      } else if (user.systemAccess.userRole === "doctor") {
+      } else if (
+        user?.userRole === "patient" ||
+        user?.systemAccess?.userRole === "doctor"
+      ) {
         navigate("/doctor/patient-records");
-      } else if (user.systemAccess.userRole === "clinic_manager") {
+      } else if (
+        user?.userRole === "patient" ||
+        user?.systemAccess?.userRole === "clinic_manager"
+      ) {
         navigate("/clinic_manager/doctors");
       }
     } else if (isError) {
