@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
-import { Box, Grid, TextField, Button, Typography, Snackbar, Alert } from '@mui/material';
-import DepartmentDropdown from '../../components/Dropdown/DepartmentDropdown';
-import GenderDropdown from '../../components/Dropdown/GenderDropdown';
-import CredentialsGenerator from '../Generals/CredentialsGenerator';
-import ImageInput from '../Generals/ImageInput';
+import React, { useState } from "react";
+import {
+  Box,
+  Grid,
+  TextField,
+  Button,
+  Typography,
+  Snackbar,
+  Alert,
+} from "@mui/material";
+import DepartmentDropdown from "../../components/Dropdown/DepartmentDropdown";
+import GenderDropdown from "../../components/Dropdown/GenderDropdown";
+import CredentialsGenerator from "../Generals/CredentialsGenerator";
+import ImageInput from "../Generals/ImageInput";
 
 const AddDoctor = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [yearsOfExperience, setYearsOfExperience] = useState('');
-  const [profileImage, setProfileImage] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [yearsOfExperience, setYearsOfExperience] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleUpdate = () => {
-    setOpenSnackbar(true);
+    const doctorData = {
+      firstName,
+      lastName,
+      yearsOfExperience,
+      profileImage,
+    };
+
+    console.log({ doctorData });
   };
 
   const handleCloseSnackbar = () => {
@@ -21,7 +36,15 @@ const AddDoctor = () => {
   };
 
   return (
-    <Box sx={{ m: 4, p: 4, bgcolor: 'background.paper', boxShadow: 3, borderRadius: 2 }}>
+    <Box
+      sx={{
+        m: 4,
+        p: 4,
+        bgcolor: "background.paper",
+        boxShadow: 3,
+        borderRadius: 2,
+      }}
+    >
       <Typography variant="h4" gutterBottom>
         Add Doctor
       </Typography>
@@ -63,7 +86,10 @@ const AddDoctor = () => {
           <CredentialsGenerator />
         </Grid>
         <Grid item xs={12}>
-          <ImageInput profileImage={profileImage} setProfileImage={setProfileImage} />
+          <ImageInput
+            profileImage={profileImage}
+            setProfileImage={setProfileImage}
+          />
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained" color="primary" onClick={handleUpdate}>
@@ -71,7 +97,11 @@ const AddDoctor = () => {
           </Button>
         </Grid>
       </Grid>
-      <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={handleCloseSnackbar}>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
         <Alert onClose={handleCloseSnackbar} severity="success">
           Doctor added successfully!
         </Alert>
