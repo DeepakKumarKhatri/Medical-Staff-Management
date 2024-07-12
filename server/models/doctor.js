@@ -58,7 +58,7 @@ const doctorSchema = new mongoose.Schema(
       default: "",
     },
     yearsOfExperience: {
-      type: Number,
+      type: String,
       default: 0,
     },
     department: {

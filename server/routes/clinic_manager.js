@@ -11,5 +11,8 @@ router.get("/patients", clinicManagerController.getPatients);
 router.delete("/doctors", clinicManagerController.deleteDoctor);
 router.delete("/clinic_managers", clinicManagerController.deleteClinicManager);
 router.delete("/patients", clinicManagerController.deletePatient);
+router.post("/add_doctor", clinicManagerController.addDoctor);
+router.post("/add_patient", clinicManagerController.addPatient);
+router.post("/add_manager", clinicManagerController.addClinicManager);
 
 module.exports = router;

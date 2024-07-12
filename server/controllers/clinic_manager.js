@@ -137,6 +137,90 @@ const deleteClinicManager = async (req, res) => {
   }
 };
 
+const addDoctor = async (req, res) => {
+  try {
+    const doctorData = req.body;
+    if (!doctorData) {
+      return res.status(400).json({ error: "No data received from client" });
+    }
+
+    const hashedPassword = await bcrypt.hash(doctorData.password, 10);
+
+    const data = {
+      firstName: doctorData.firstName,
+      lastName: doctorData.lastName,
+      userId: doctorData.id,
+      password: hashedPassword,
+      avatar: doctorData.profileImage,
+      gender: doctorData.gender,
+      yearsOfExperience: doctorData.yearsOfExperience,
+      department: doctorData.department,
+      contact: doctorData.id,
+      patients: [],
+      submissions: [],
+      systemAccess: { userRole: "doctor" },
+    };
+    console.log(data);
+
+    const doctor = await Doctor.create(data);
+    if (!doctor) {
+      return res.status(404).json({ error: "Error occurred" });
+    }
+
+    res.status(200).json({
+      message: "SUCCESS",
+      doctor,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const addPatient = async (req, res) => {
+  try {
+    const patientData = req.body.patientData;
+    if (!patientData) {
+      return res.status(400).json({ error: "No data received from client" });
+    }
+
+    const patient = await Patient.create(patientData);
+    if (!patient) {
+      return res.status(404).json({ error: "Error occurred" });
+    }
+
+    res.status(200).json({
+      message: "SUCCESS",
+      patient,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const addClinicManager = async (req, res) => {
+  try {
+    const clinicManagerData = req.body.clinicManagerData;
+    if (!clinicManagerData) {
+      return res.status(400).json({ error: "No data received from client" });
+    }
+
+    const clinicManager = await ClinicManager.create(clinicManagerData);
+    if (!patient) {
+      return res.status(404).json({ error: "Error occurred" });
+    }
+
+    res.status(200).json({
+      message: "SUCCESS",
+      clinicManager,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   signUpClinicManager,
   getDoctors,
@@ -145,4 +229,7 @@ module.exports = {
   deletePatient,
   deleteDoctor,
   deleteClinicManager,
+  addDoctor,
+  addPatient,
+  addClinicManager,
 };

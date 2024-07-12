@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import ImageInput from "../Generals/ImageInput";
 import { generateCredentials } from "../../lib/generateCreditionals";
+import { useDispatch, useSelector } from "react-redux";
+import { addDoctor } from "../ClinicManagerUsers/clinicManagerUsersSlice";
 
 const AddDoctor = () => {
   const [firstName, setFirstName] = useState("");
@@ -25,6 +27,11 @@ const AddDoctor = () => {
   const [profileImage, setProfileImage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const dispatch = useDispatch();
+  const { isLoading, isError, errorMessage } = useSelector(
+    (state) => state.clinicManagerUsers
+  );
 
   const handleUpdate = () => {
     const doctorData = {
@@ -40,8 +47,9 @@ const AddDoctor = () => {
 
     console.log({ doctorData });
 
-    // Perform further actions such as submitting data to a server
-    setOpenSnackbar(true);
+    dispatch(addDoctor(doctorData)).then(() => {
+      setOpenSnackbar(true);
+    });
   };
 
   const handleCloseSnackbar = () => {
@@ -179,8 +187,13 @@ const AddDoctor = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button variant="contained" color="primary" onClick={handleUpdate}>
-            Add Doctor
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleUpdate}
+            disabled={isLoading}
+          >
+            {isLoading ? "Adding..." : "Add Doctor"}
           </Button>
         </Grid>
       </Grid>
@@ -193,6 +206,13 @@ const AddDoctor = () => {
           Doctor added successfully!
         </Alert>
       </Snackbar>
+      {isError && (
+        <Snackbar open autoHideDuration={6000} onClose={handleCloseSnackbar}>
+          <Alert onClose={handleCloseSnackbar} severity="error">
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      )}
     </Box>
   );
 };
