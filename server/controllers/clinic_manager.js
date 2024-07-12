@@ -248,7 +248,6 @@ const addClinicManager = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const clinicManagerData = req.body;
-    console.log(clinicManagerData);
     if (!clinicManagerData) {
       return res.status(400).json({ error: "No data received from client" });
     }

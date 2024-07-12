@@ -41,12 +41,12 @@ export default function SignIn() {
       ) {
         navigate("/patient/treatments");
       } else if (
-        user?.userRole === "patient" ||
+        user?.userRole === "doctor" ||
         user?.systemAccess?.userRole === "doctor"
       ) {
         navigate("/doctor/patient-records");
       } else if (
-        user?.userRole === "patient" ||
+        user?.userRole === "clinic_manager" ||
         user?.systemAccess?.userRole === "clinic_manager"
       ) {
         navigate("/clinic_manager/doctors");

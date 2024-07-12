@@ -12,7 +12,6 @@ import {
 import ImageInput from "../../components/Generals/ImageInput";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../components/ClinicManagerUsers/clinicManagerUsersSlice";
-import { userLogin } from "../../components/Auth/authSlice";
 
 const ClinicManagerProfile = ({ comingFrom }) => {
   const [firstName, setFirstName] = useState("");
