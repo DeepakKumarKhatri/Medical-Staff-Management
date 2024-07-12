@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 
 const signUpPatient = async (req, res) => {
   const { firstName, lastName, userId, password } = req.body;
+  console.log(firstName, lastName, userId, password);
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -16,9 +17,9 @@ const signUpPatient = async (req, res) => {
       contact: "",
       diseases: [],
       submissions: [],
+      status: "",
       systemAccess: { userRole: "patient" },
     });
-
     const patient = await newPatient.save();
 
     res

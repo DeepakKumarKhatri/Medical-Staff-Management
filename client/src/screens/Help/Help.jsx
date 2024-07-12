@@ -58,8 +58,6 @@ const Help = ({ comingFrom }) => {
       stars: formData.rating || undefined, 
     };
 
-    console.log(submissionData)
-
     dispatch(addSubmission(submissionData))
       .then(() => {
         setSubmitted(true);
