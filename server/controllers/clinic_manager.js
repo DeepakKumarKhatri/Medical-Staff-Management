@@ -179,12 +179,27 @@ const addDoctor = async (req, res) => {
 
 const addPatient = async (req, res) => {
   try {
-    const patientData = req.body.patientData;
+    const patientData = req.body;
     if (!patientData) {
       return res.status(400).json({ error: "No data received from client" });
     }
 
-    const patient = await Patient.create(patientData);
+    const hashedPassword = await bcrypt.hash(patientData.password, 10);
+
+    const data = {
+      firstName: patientData.firstName,
+      lastName: patientData.lastName,
+      userId: patientData.id,
+      password: hashedPassword,
+      avatar: patientData.profileImage,
+      gender: patientData.gender,
+      contact: patientData.id,
+      submissions: [],
+      systemAccess: { userRole: "patient" },
+    };
+    console.log(data);
+
+    const patient = await Patient.create(data);
     if (!patient) {
       return res.status(404).json({ error: "Error occurred" });
     }
@@ -201,13 +216,26 @@ const addPatient = async (req, res) => {
 
 const addClinicManager = async (req, res) => {
   try {
-    const clinicManagerData = req.body.clinicManagerData;
+    const clinicManagerData = req.body;
     if (!clinicManagerData) {
       return res.status(400).json({ error: "No data received from client" });
     }
 
-    const clinicManager = await ClinicManager.create(clinicManagerData);
-    if (!patient) {
+    const hashedPassword = await bcrypt.hash(clinicManagerData.password, 10);
+
+    const data = {
+      firstName: clinicManagerData.firstName,
+      lastName: clinicManagerData.lastName,
+      userId: clinicManagerData.id,
+      password: hashedPassword,
+      avatar: clinicManagerData.profileImage,
+      contact: clinicManagerData.id,
+      systemAccess: { userRole: "clinic_manager" },
+    };
+    console.log(data);
+
+    const clinicManager = await ClinicManager.create(data);
+    if (!clinicManager) {
       return res.status(404).json({ error: "Error occurred" });
     }
 
