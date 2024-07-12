@@ -45,8 +45,6 @@ const AddDoctor = () => {
       profileImage,
     };
 
-    console.log({ doctorData });
-
     dispatch(addDoctor(doctorData)).then(() => {
       setOpenSnackbar(true);
     });

@@ -160,7 +160,6 @@ const addDoctor = async (req, res) => {
       submissions: [],
       systemAccess: { userRole: "doctor" },
     };
-    console.log(data);
 
     const doctor = await Doctor.create(data);
     if (!doctor) {
@@ -197,7 +196,6 @@ const addPatient = async (req, res) => {
       submissions: [],
       systemAccess: { userRole: "patient" },
     };
-    console.log(data);
 
     const patient = await Patient.create(data);
     if (!patient) {
@@ -229,10 +227,8 @@ const addClinicManager = async (req, res) => {
       userId: clinicManagerData.id,
       password: hashedPassword,
       avatar: clinicManagerData.profileImage,
-      contact: clinicManagerData.id,
       systemAccess: { userRole: "clinic_manager" },
     };
-    console.log(data);
 
     const clinicManager = await ClinicManager.create(data);
     if (!clinicManager) {
