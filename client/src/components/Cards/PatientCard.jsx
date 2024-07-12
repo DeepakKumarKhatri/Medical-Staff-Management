@@ -30,7 +30,7 @@ const PatientCard = ({ patient }) => {
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
         <Avatar
           alt={`${patient.firstName} ${patient.lastName}`}
-          src={patient.profileImage}
+          src={patient.avatar}
           sx={{ width: 100, height: 100 }}
         />
       </Box>
@@ -44,12 +44,9 @@ const PatientCard = ({ patient }) => {
         <Typography variant="body1" sx={{ mt: 1 }}>
           <strong>ID:</strong> {patient.id}
         </Typography>
-        <Typography variant="body1" sx={{ mt: 1 }}>
-          <strong>Password:</strong> {patient.password}
-        </Typography>
       </CardContent>
       <Box sx={{ textAlign: "center" }}>
-        <StatusDropdown status={patient.status} />
+        <StatusDropdown diseases={patient.diseases} />
       </Box>
     </Card>
   );

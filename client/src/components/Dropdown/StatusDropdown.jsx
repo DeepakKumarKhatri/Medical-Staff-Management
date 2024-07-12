@@ -9,9 +9,16 @@ import Alert from "@mui/material/Alert";
 import clsx from "clsx";
 import { getStatusClass } from "../../constants/getStatusClass";
 
-export default function StatusDropdown() {
+const StatusDropdown = ({ diseases }) => {
   const [status, setStatus] = React.useState("");
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  React.useEffect(() => {
+    const initialStatus =
+      diseases.find((disease) => disease.status === "Start Treatment")
+        ?.status || "Start Treatment";
+    setStatus(initialStatus);
+  }, [diseases]);
 
   const handleChange = (event) => {
     setStatus(event.target.value);
@@ -25,10 +32,10 @@ export default function StatusDropdown() {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Status</InputLabel>
+        <InputLabel id="status-select-label">Status</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="status-select-label"
+          id="status-select"
           value={status}
           label="Status"
           onChange={handleChange}
@@ -63,4 +70,6 @@ export default function StatusDropdown() {
       </Snackbar>
     </Box>
   );
-}
+};
+
+export default StatusDropdown;

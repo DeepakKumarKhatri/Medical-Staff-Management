@@ -58,33 +58,27 @@ const addPatient = async (req, res) => {
   }
 };
 
-const updateProfile = async (req, res) => {
+const getPatients = async (req, res) => {
   try {
-    const doctorData = req.body;
-    if (!doctorData) {
-      return res.status(400).json({ error: "No data received from client" });
+    const { doctorId } = req.body;
+    if (!doctorId) {
+      return res
+        .status(400)
+        .json({ error: "Doctor Id not received from the client" });
     }
 
-    const { firstName, lastName, id, profileImage, originalID } = doctorData;
-
-    const doctor = await Doctor.findOneAndUpdate(
-      { userId: originalID },
-      {
-        firstName,
-        lastName,
-        avatar: profileImage,
-        userId: id,
-      },
-      { new: true }
-    );
+    const doctor = await Doctor.findById(doctorId).populate({
+      path: "patients.patient",
+      model: "Patient",
+    });
 
     if (!doctor) {
-      return res.status(404).json({ error: "Error occurred" });
+      return res.status(404).json({ error: "Doctor not found" });
     }
 
     res.status(200).json({
       message: "SUCCESS",
-      clinicManager,
+      patients: doctor.patients.map((p) => p.patient),
     });
   } catch (err) {
     console.error(err);
@@ -94,5 +88,5 @@ const updateProfile = async (req, res) => {
 
 module.exports = {
   addPatient,
-  updateProfile,
+  getPatients,
 };

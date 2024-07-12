@@ -67,7 +67,6 @@ const AddPatient = () => {
     setGeneratedCredentials({ patientId: id, password: pass });
     const diagnosedBy = getDoctorStuff();
     const data = { ...patientData, id, pass, diagnosedBy };
-    console.log({ data });
     dispatch(addPatient(data)).then(() => {
       setOpenSnackbar(true);
     });

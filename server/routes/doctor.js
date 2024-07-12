@@ -5,6 +5,6 @@ const { verifyToken, authorizeRole } = require("../middlewares/auth");
 const roles = require("../lib/roles");
 
 router.post("/add_patient", doctorController.addPatient);
-router.patch("/update_profile", doctorController.updateProfile);
+router.post("/get_patients", doctorController.getPatients);
 
 module.exports = router;
