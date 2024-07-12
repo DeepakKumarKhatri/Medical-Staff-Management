@@ -98,6 +98,31 @@ export const addClinicManager = createAsyncThunk(
   }
 );
 
+export const updateProfile = createAsyncThunk(
+  "clinicManagerUsers/updateProfile",
+  async (clinicManagerData, thunkAPI) => {
+    try {
+      const response = await fetch(
+        `${server_url}/api/clinic_manager/update_profile`,
+        {
+          method: "PATCH",
+          body: JSON.stringify(clinicManagerData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        const error = await response.json();
+        return thunkAPI.rejectWithValue(error);
+      }
+      return response.json();
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ message: "Network error" });
+    }
+  }
+);
+
 const clinicManagerUsersSlice = createSlice({
   name: "clinicManagerUsers",
   initialState: {
@@ -178,6 +203,24 @@ const clinicManagerUsersSlice = createSlice({
       state.errorMessage = action.payload
         ? action.payload.message || "FAILED TO ADD CLINIC MANAGER"
         : "FAILED TO ADD CLINIC MANAGER";
+    });
+    builder.addCase(updateProfile.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.errorMessage = "";
+    });
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.image = action.payload.secure_url;
+      state.isError = false;
+      state.errorMessage = "";
+    });
+    builder.addCase(updateProfile.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.errorMessage = action.payload
+        ? action.payload.message || "FAILED TO UPDATE PROFILE"
+        : "FAILED TO UPDATE PROFILE";
     });
   },
 });

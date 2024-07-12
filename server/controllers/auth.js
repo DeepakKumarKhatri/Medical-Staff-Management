@@ -10,6 +10,7 @@ const generateAccessToken = async (user) => {
       id: user.user._id,
       userRole: user.user.systemAccess.userRole,
       userId: user.user.userId,
+      user: user,
     },
     process.env.JWT_SECRET_KEY,
     {

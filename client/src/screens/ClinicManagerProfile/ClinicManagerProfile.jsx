@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Grid,
@@ -9,21 +9,48 @@ import {
   Alert,
   Avatar,
 } from "@mui/material";
+import ImageInput from "../../components/Generals/ImageInput";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProfile } from "../../components/ClinicManagerUsers/clinicManagerUsersSlice";
+import { userLogin } from "../../components/Auth/authSlice";
 
 const ClinicManagerProfile = ({ comingFrom }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [profileImage, setProfileImage] = useState("");
+  const [id, setID] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [originalID, setOriginalID] = useState("");
 
-  const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setProfileImage(URL.createObjectURL(e.target.files[0]));
+  const dispatch = useDispatch();
+  const { isLoading, isError, errorMessage } = useSelector(
+    (state) => state.clinicManagerUsers
+  );
+  const currentUser = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    if (comingFrom === "profile" && currentUser) {
+      setFirstName(
+        currentUser?.user?.user?.firstName || currentUser?.firstName
+      );
+      setLastName(currentUser?.user?.user?.lastName || currentUser?.lastName);
+      setProfileImage(currentUser?.user?.user?.avatar || currentUser?.avatar);
+      setID(currentUser?.userId);
+      setOriginalID(currentUser?.userId);
     }
-  };
+  }, [comingFrom, currentUser]);
 
   const handleUpdate = () => {
-    setOpenSnackbar(true);
+    const data = {
+      firstName,
+      lastName,
+      id,
+      profileImage,
+      originalID,
+    };
+    dispatch(updateProfile(data)).then(() => {
+      setOpenSnackbar(true);
+    });
   };
 
   const handleCloseSnackbar = () => {
@@ -67,40 +94,39 @@ const ClinicManagerProfile = ({ comingFrom }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField label="ID" value="ID" disabled={isReadOnly} fullWidth />
-        </Grid>
-        <Grid item xs={12}>
           <TextField
-            label="Password"
-            value="PASSWORD"
+            label="ID"
             disabled={isReadOnly}
+            value={id}
+            onChange={(e) => setID(e.target.value)}
             fullWidth
           />
         </Grid>
         <Grid item xs={12}>
           <Box alignItems="center">
-            <Avatar
-              alt="User Profile"
-              src={profileImage}
-              sx={{ width: 100, height: 100, mb: 2 }}
-            />
-            {comingFrom !== "profile" && (
-              <Button variant="outlined" component="label">
-                Change Image
-                <input
-                  type="file"
-                  hidden
-                  disabled={isReadOnly}
-                  onChange={handleImageChange}
-                />
-              </Button>
+            {comingFrom !== "profile" ? (
+              <ImageInput
+                profileImage={profileImage}
+                setProfileImage={setProfileImage}
+              />
+            ) : (
+              <Avatar
+                alt="User Profile"
+                src={profileImage}
+                sx={{ width: 100, height: 100, mb: 2 }}
+              />
             )}
           </Box>
         </Grid>
         {comingFrom === "edit-profile" && (
           <Grid item xs={12}>
-            <Button variant="contained" color="primary" onClick={handleUpdate}>
-              Update
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleUpdate}
+              disabled={isLoading}
+            >
+              {isLoading ? "Updating..." : "Update"}
             </Button>
           </Grid>
         )}
@@ -114,6 +140,13 @@ const ClinicManagerProfile = ({ comingFrom }) => {
           Profile updated successfully!
         </Alert>
       </Snackbar>
+      {isError && (
+        <Snackbar open autoHideDuration={6000} onClose={handleCloseSnackbar}>
+          <Alert onClose={handleCloseSnackbar} severity="error">
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      )}
     </Box>
   );
 };

@@ -245,6 +245,42 @@ const addClinicManager = async (req, res) => {
   }
 };
 
+const updateProfile = async (req, res) => {
+  try {
+    const clinicManagerData = req.body;
+    console.log(clinicManagerData);
+    if (!clinicManagerData) {
+      return res.status(400).json({ error: "No data received from client" });
+    }
+
+    const { firstName, lastName, id, profileImage, originalID } =
+      clinicManagerData;
+
+    const clinicManager = await ClinicManager.findOneAndUpdate(
+      { userId: originalID },
+      {
+        firstName,
+        lastName,
+        avatar: profileImage,
+        userId: id,
+      },
+      { new: true }
+    );
+
+    if (!clinicManager) {
+      return res.status(404).json({ error: "Error occurred" });
+    }
+
+    res.status(200).json({
+      message: "SUCCESS",
+      clinicManager,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   signUpClinicManager,
   getDoctors,
@@ -256,4 +292,5 @@ module.exports = {
   addDoctor,
   addPatient,
   addClinicManager,
+  updateProfile,
 };
