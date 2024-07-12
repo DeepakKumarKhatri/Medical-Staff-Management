@@ -2,7 +2,6 @@ import {
   ChevronFirst,
   ChevronLast,
   BriefcaseMedical,
-  ClipboardPlus,
   HandHelping,
   User,
 } from "lucide-react";
@@ -77,11 +76,11 @@ export function Sidebar({ children }) {
               } `}
             >
               <div className="leading-4">
-              <h4 className="font-semibold text-black">{firstName}</h4>
-              <span className="text-xs text-gray-600">{id}</span>
+                <h4 className="font-semibold text-black">{firstName}</h4>
+                <span className="text-xs text-gray-600">{id}</span>
               </div>
               <span className="bg-gray-300 p-2 rounded-lg	hover:bg-gray-400">
-                <PositionedMenu comingFrom={'patient'}/>
+                <PositionedMenu comingFrom={"patient"} />
               </span>
             </div>
           </div>
@@ -143,11 +142,6 @@ const PatientSidebarCaller = ({ children }) => {
         icon={<BriefcaseMedical size={20} />}
         text="My Treatments"
         to="/patient/treatments"
-      />
-      <SidebarItem
-        icon={<ClipboardPlus size={20} />}
-        text="Instructions"
-        to="/patient/instructions"
       />
       <hr className="my-3" />
       <SidebarItem

@@ -1,15 +1,13 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const TreatmentDetail = () => {
   const navigate = useNavigate();
-  const treatmentDetails = {
-    diseaseName: "Malaria",
-    checkedByDoctor: "Dr. Alma",
-    date: "July 10, 2024",
-    patientName: "Deepak",
-    details:
-      "Malaria is a mosquito-borne infectious disease that affects humans and other animals. It is caused by parasitic protozoans belonging to the Plasmodium type. The disease is transmitted through the bite of an infected female Anopheles mosquito.",
+  const location = useLocation();
+  const { disease } = location.state;
+
+  const handleCheckInstructions = () => {
+    navigate("/patient/instructions-details", { state: { instructions: disease.instructions } });
   };
 
   return (
@@ -17,26 +15,24 @@ const TreatmentDetail = () => {
       <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
         <div className="p-4">
           <h2 className="text-2xl font-bold text-blue-900 mb-4">
-            {treatmentDetails.diseaseName} Treatment Details
+            {disease?.title} Treatment Details
           </h2>
           <div className="flex items-center mb-3">
             <p className="font-bold mr-2">Checked By:</p>
-            <p className="text-gray-700">{treatmentDetails.checkedByDoctor}</p>
+            <p className="text-gray-700">Dr. {disease?.diagnosedBy}</p>
           </div>
           <div className="flex items-center mb-3">
-            <p className="font-bold mr-2">Date:</p>
-            <p className="text-gray-700">{treatmentDetails.date}</p>
+            <p className="font-bold mr-2">Status:</p>
+            <p className="text-gray-700">{disease?.status}</p>
           </div>
           <div className="flex items-center mb-3">
-            <p className="font-bold mr-2">Patient Name:</p>
-            <p className="text-gray-700">{treatmentDetails.patientName}</p>
+            <p className="font-bold mr-2">Description:</p>
+            <p className="text-gray-700">{disease?.description}</p>
           </div>
-          <p className="text-gray-700 mb-6">{treatmentDetails.details}</p>
         </div>
         <div className="p-4 bg-gray-100">
           <div
-            onClick={() => navigate("/patient/instructions/:instructionsID")}
-            to={`instructions/:instructionsID`}
+            onClick={handleCheckInstructions}
             className="block text-center py-2 px-4 bg-[#F4A261] text-white font-semibold rounded-md shadow-md hover:bg-[#E76F51] transition-colors"
           >
             Check Treatment Instructions

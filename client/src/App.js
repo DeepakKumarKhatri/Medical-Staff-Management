@@ -63,12 +63,6 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "instructions",
-        element: (
-          <ProtectedRoute component={PatientInstructions} forUser="patient" />
-        ),
-      },
-      {
         path: "help",
         element: <Help comingFrom={"patient"} />,
       },
@@ -81,11 +75,11 @@ const router = createBrowserRouter([
         element: <PatientProfile comingFrom={"edit-profile"} />,
       },
       {
-        path: "treatments/:treatmentID",
+        path: "treatment-details",
         element: <TreatmentDetail />,
       },
       {
-        path: "instructions/:instructionsID",
+        path: "instructions-details",
         element: <InstructionsDetail />,
       },
     ],

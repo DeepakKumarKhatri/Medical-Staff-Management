@@ -18,6 +18,7 @@ import {
 import { labels } from "../../constants/RatingLabels";
 import { useDispatch, useSelector } from "react-redux";
 import { addSubmission } from "../DoctorPatients/doctorSlice";
+import { addPatientSubmission } from "../../components/PatientSidebar/patientSlice";
 
 const Help = ({ comingFrom }) => {
   const [formData, setFormData] = useState({
@@ -53,20 +54,30 @@ const Help = ({ comingFrom }) => {
 
     const submissionData = {
       ...formData,
-      userId, 
+      userId,
       ofType: formData.messageType === "Feedback" ? "feedback" : "complaint",
-      stars: formData.rating || undefined, 
+      stars: formData.rating || undefined,
     };
 
-    dispatch(addSubmission(submissionData))
-      .then(() => {
-        setSubmitted(true);
-        setError("");
-      })
-      .catch(err => {
-        setError("An error occurred while submitting.");
-        console.error(err);
-      });
+    comingFrom === "doctor"
+      ? dispatch(addSubmission(submissionData))
+          .then(() => {
+            setSubmitted(true);
+            setError("");
+          })
+          .catch((err) => {
+            setError("An error occurred while submitting.");
+            console.error(err);
+          })
+      : dispatch(addPatientSubmission(submissionData))
+          .then(() => {
+            setSubmitted(true);
+            setError("");
+          })
+          .catch((err) => {
+            setError("An error occurred while submitting.");
+            console.error(err);
+          });
   };
 
   return (

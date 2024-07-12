@@ -5,6 +5,7 @@ const { verifyToken, authorizeRole } = require("../middlewares/auth");
 const roles = require('../lib/roles');
 
 router.post("/register", patientController.signUpPatient);
+router.patch("/add_submission", patientController.addSubmission);
 router.get("/demo", verifyToken, authorizeRole(roles.PATIENT) ,patientController.demoMethod);
 
 module.exports = router;

@@ -59,14 +59,18 @@ export default function PositionedMenu({ comingFrom }) {
         >
           Logout
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            navigate(decidePath(comingFrom));
-            handleClose();
-          }}
-        >
-          Edit Profile
-        </MenuItem>
+        {comingFrom !== "patient" ? (
+          <MenuItem
+            onClick={() => {
+              navigate(decidePath(comingFrom));
+              handleClose();
+            }}
+          >
+            Edit Profile
+          </MenuItem>
+        ) : (
+          <></>
+        )}
       </Menu>
     </div>
   );
