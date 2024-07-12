@@ -73,6 +73,8 @@ const AddPatient = () => {
   };
 
   const getDoctorStuff = () => {
+    console.log("OUR CURRENT:    ")
+    console.log(currentUser.id);
     return {
       doctorName:
         currentUser?.user?.user?.firstName ||

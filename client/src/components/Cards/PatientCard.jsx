@@ -21,10 +21,10 @@ const PatientCard = ({ patient }) => {
         borderRadius: "8px",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         transition: "transform 0.2s, box-shadow 0.2s",
-        '&:hover': {
+        "&:hover": {
           transform: "translateY(-5px)",
           boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
-        }
+        },
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
@@ -42,11 +42,11 @@ const PatientCard = ({ patient }) => {
           Patient Credentials
         </Typography>
         <Typography variant="body1" sx={{ mt: 1 }}>
-          <strong>ID:</strong> {patient.id}
+          <strong>ID:</strong> {patient.userId}
         </Typography>
       </CardContent>
       <Box sx={{ textAlign: "center" }}>
-        <StatusDropdown diseases={patient.diseases} />
+        <StatusDropdown diseases={patient.diseases} patientId={patient}/>
       </Box>
     </Card>
   );

@@ -8,10 +8,15 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import clsx from "clsx";
 import { getStatusClass } from "../../constants/getStatusClass";
+import { useDispatch, useSelector } from "react-redux";
+import { changePatientStatus } from "../../screens/DoctorPatients/doctorSlice";
 
-const StatusDropdown = ({ diseases }) => {
+const StatusDropdown = ({ diseases, patientId }) => {
   const [status, setStatus] = React.useState("");
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.doctor.isLoading);
+  const [recievedId, setRecievedId] = React.useState(patientId._id);
 
   React.useEffect(() => {
     const initialStatus =
@@ -21,7 +26,9 @@ const StatusDropdown = ({ diseases }) => {
   }, [diseases]);
 
   const handleChange = (event) => {
-    setStatus(event.target.value);
+    const newStatus = event.target.value;
+    setStatus(newStatus);
+    dispatch(changePatientStatus({ patientId: recievedId, status: newStatus }));
     setOpenSnackbar(true);
   };
 
@@ -40,6 +47,7 @@ const StatusDropdown = ({ diseases }) => {
           label="Status"
           onChange={handleChange}
           className={clsx("rounded-2xl", getStatusClass(status))}
+          disabled={isLoading}
         >
           <MenuItem value="Start Treatment" className="bg-red-100 text-red-700">
             Start Treatment

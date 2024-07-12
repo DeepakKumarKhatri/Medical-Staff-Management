@@ -45,6 +45,28 @@ export const getPatients = createAsyncThunk(
   }
 );
 
+export const changePatientStatus = createAsyncThunk(
+  "doctor/changePatientStatus",
+  async ({ patientId, status }, thunkAPI) => {
+    try {
+      const response = await fetch(`${server_url}/api/doctor/change_status`, {
+        method: "POST",
+        body: JSON.stringify({ patientId, status }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        const error = await response.json();
+        return thunkAPI.rejectWithValue(error);
+      }
+      return response.json();
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ message: "Network error" });
+    }
+  }
+);
+
 const doctorSlice = createSlice({
   name: "doctor",
   initialState: {
@@ -88,6 +110,29 @@ const doctorSlice = createSlice({
       state.errorMessage = action.payload
         ? action.payload.message || "FAILED TO RETRIEVE PATIENTS"
         : "FAILED TO RETRIEVE PATIENTS";
+    });
+    builder.addCase(changePatientStatus.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.errorMessage = "";
+    });
+    builder.addCase(changePatientStatus.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.errorMessage = "";
+      const index = state.patients.findIndex(
+        (p) => p._id === action.payload.patient._id
+      );
+      if (index !== -1) {
+        state.patients[index].status = action.payload.patient.status;
+      }
+    });
+    builder.addCase(changePatientStatus.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.errorMessage = action.payload
+        ? action.payload.message || "FAILED TO CHANGE PATIENT STATUS"
+        : "FAILED TO CHANGE PATIENT STATUS";
     });
   },
 });

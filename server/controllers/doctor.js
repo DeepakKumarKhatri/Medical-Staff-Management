@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const addPatient = async (req, res) => {
   try {
     const patientData = req.body;
+
     if (!patientData) {
       return res.status(400).json({ error: "No data received from client" });
     }
@@ -86,7 +87,34 @@ const getPatients = async (req, res) => {
   }
 };
 
+const changeStatus = async (req, res) => {
+  try {
+    const { patientId, status } = req.body;
+
+    if (!patientId || !status) {
+      return res
+        .status(400)
+        .json({ error: "Patient ID and status are required" });
+    }
+
+    const patient = await Patient.findById(patientId);
+
+    if (!patient) {
+      return res.status(404).json({ error: "Patient not found" });
+    }
+
+    patient.status = status;
+    await patient.save();
+
+    res.status(200).json({ message: "SUCCESS", patient });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   addPatient,
   getPatients,
+  changeStatus,
 };

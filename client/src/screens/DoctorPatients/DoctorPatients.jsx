@@ -8,7 +8,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import { Search } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
-import {getPatients} from '../../screens/DoctorPatients/doctorSlice';
+import { getPatients } from "../../screens/DoctorPatients/doctorSlice";
 import { useEffect } from "react";
 
 const DoctorPatients = () => {
@@ -23,13 +23,12 @@ const DoctorPatients = () => {
   }, [doctorId, dispatch]);
 
   const patients = useSelector((state) => state.doctor.patients);
-  console.log(patients);
   const isLoading = useSelector((state) => state.doctor.isLoading);
   const isError = useSelector((state) => state.doctor.isError);
   const errorMessage = useSelector((state) => state.doctor.errorMessage);
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
+    <div className="m-4">
       <Box sx={{ display: "flex", alignItems: "center", mb: 2, gap: 2 }}>
         <Box sx={{ flex: 1 }}>
           <h1 className="text-3xl font-bold text-blue-900">
@@ -68,9 +67,8 @@ const DoctorPatients = () => {
       ) : (
         <PatientGrid patients={patients} />
       )}
-    </Container>
+    </div>
   );
 };
 
 export default DoctorPatients;
-

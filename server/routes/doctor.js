@@ -6,5 +6,7 @@ const roles = require("../lib/roles");
 
 router.post("/add_patient", doctorController.addPatient);
 router.post("/get_patients", doctorController.getPatients);
+router.post("/change_status", doctorController.changeStatus);
+
 
 module.exports = router;

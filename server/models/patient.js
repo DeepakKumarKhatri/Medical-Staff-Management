@@ -98,6 +98,10 @@ const patientSchema = new mongoose.Schema(
       type: [submissionSchema],
       default: [],
     },
+    status: {
+      type: String,
+      default: "",
+    },
     systemAccess: {
       type: systemAccessSchema,
       default: () => ({ userRole: "patient" }),
