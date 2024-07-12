@@ -9,7 +9,7 @@ const generateCredentials = () => {
 
 const CredentialsGenerator = () => {
   const [credentials, setCredentials] = useState({ id: '', password: '' });
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [credSnackbarOpen, setCredSnackbarOpen] = useState(false);
 
   const handleGenerate = () => {
     setCredentials(generateCredentials());
@@ -18,12 +18,12 @@ const CredentialsGenerator = () => {
   const handleCopy = () => {
     const text = `ID: ${credentials.id}, Password: ${credentials.password}`;
     navigator.clipboard.writeText(text).then(() => {
-      setSnackbarOpen(true);
+      setCredSnackbarOpen(true);
     });
   };
 
   const handleCloseSnackbar = () => {
-    setSnackbarOpen(false);
+    setCredSnackbarOpen(false);
   };
 
   return (
@@ -37,7 +37,7 @@ const CredentialsGenerator = () => {
         Copy to Clipboard
       </Button>
       <Snackbar
-        open={snackbarOpen}
+        open={credSnackbarOpen}
         autoHideDuration={3000}
         onClose={handleCloseSnackbar}
       >
