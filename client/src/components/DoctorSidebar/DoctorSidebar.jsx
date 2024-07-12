@@ -25,6 +25,7 @@ export function Sidebar({ children }) {
   const [firstName, setFirstName] = useState("");
   const [id, setID] = useState("");
   const currentUser = useSelector((state) => state.auth.user);
+  console.log(currentUser);
   useEffect(() => {
     if (currentUser) {
       setProfileImage(currentUser?.user?.user?.avatar || currentUser?.avatar);
