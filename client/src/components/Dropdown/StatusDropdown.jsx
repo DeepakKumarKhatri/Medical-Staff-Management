@@ -16,14 +16,12 @@ const StatusDropdown = ({ diseases, patientId }) => {
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.doctor.isLoading);
-  const [recievedId, setRecievedId] = React.useState(patientId._id);
+  const [recievedId] = React.useState(patientId._id);
 
   React.useEffect(() => {
-    const initialStatus =
-      diseases.find((disease) => disease.status === "Start Treatment")
-        ?.status || "Start Treatment";
+    const initialStatus = patientId.status;
     setStatus(initialStatus);
-  }, [diseases]);
+  }, [patientId]);
 
   const handleChange = (event) => {
     const newStatus = event.target.value;
