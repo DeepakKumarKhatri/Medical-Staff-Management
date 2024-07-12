@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import {
   ChevronFirst,
   ChevronLast,
@@ -12,15 +12,28 @@ import {
   Users,
 } from "lucide-react";
 import logo from "../../assets/images/logo/logo.png";
-import profile from "../../assets/images/logo/logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import PositionedMenu from "../Dropdown/Dropdown";
 import { useEscapeToggle } from "../../hooks/useEscapeToggle";
+import { useSelector } from "react-redux";
 
 const SidebarContext = createContext();
 
 export function Sidebar({ children }) {
   const [expanded, setExpanded] = useState(true);
+  const [profileImage, setProfileImage] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [id, setID] = useState("");
+  const currentUser = useSelector((state) => state.auth.user);
+  useEffect(() => {
+    if (currentUser) {
+      setProfileImage(currentUser?.user?.user?.avatar || currentUser?.avatar);
+      setFirstName(
+        currentUser?.user?.user?.firstName || currentUser?.firstName
+      );
+      setID(currentUser?.userId);
+    }
+  }, [currentUser]);
 
   const toggleExpanded = () => {
     setExpanded((curr) => !curr);
@@ -58,7 +71,7 @@ export function Sidebar({ children }) {
 
           <div className="border-t flex p-3">
             <img
-              src={profile}
+              src={profileImage}
               className="w-10 h-10 rounded-md"
               alt="User Profile"
             />
@@ -68,11 +81,11 @@ export function Sidebar({ children }) {
               }`}
             >
               <div className="leading-4">
-                <h4 className="font-semibold">Medico</h4>
-                <span className="text-xs text-gray-600">medico@gmail.com</span>
+                <h4 className="font-semibold text-black">{firstName}</h4>
+                <span className="text-xs text-gray-600">{id}</span>
               </div>
               <span className="bg-gray-300 p-2 rounded-lg hover:bg-gray-400">
-                <PositionedMenu comingFrom={'doctor'} />
+                <PositionedMenu comingFrom={"doctor"} />
               </span>
             </div>
           </div>

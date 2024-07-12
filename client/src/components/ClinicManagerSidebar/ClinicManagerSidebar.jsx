@@ -14,7 +14,6 @@ import {
   PlusCircleIcon,
 } from "lucide-react";
 import logo from "../../assets/images/logo/logo.png";
-import profile from "../../assets/images/logo/logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import PositionedMenu from "../Dropdown/Dropdown";
 import { useEscapeToggle } from "../../hooks/useEscapeToggle";
