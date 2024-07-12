@@ -16,6 +16,8 @@ import {
   Tooltip,
 } from "@mui/material";
 import { labels } from "../../constants/RatingLabels";
+import { useDispatch, useSelector } from "react-redux";
+import { addSubmission } from "../DoctorPatients/doctorSlice";
 
 const Help = ({ comingFrom }) => {
   const [formData, setFormData] = useState({
@@ -27,6 +29,8 @@ const Help = ({ comingFrom }) => {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
   const [hover, setHover] = useState(-1);
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.auth.user);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,9 +49,26 @@ const Help = ({ comingFrom }) => {
       return;
     }
 
-    console.log(formData);
-    setSubmitted(true);
-    setError("");
+    const userId = currentUser?.id;
+
+    const submissionData = {
+      ...formData,
+      userId, 
+      ofType: formData.messageType === "Feedback" ? "feedback" : "complaint",
+      stars: formData.rating || undefined, 
+    };
+
+    console.log(submissionData)
+
+    dispatch(addSubmission(submissionData))
+      .then(() => {
+        setSubmitted(true);
+        setError("");
+      })
+      .catch(err => {
+        setError("An error occurred while submitting.");
+        console.error(err);
+      });
   };
 
   return (

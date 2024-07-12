@@ -171,9 +171,48 @@ const updateProfile = async (req, res) => {
   }
 };
 
+const addSubmission = async (req, res) => {
+  try {
+    const formData = req.body;
+    if (!formData) {
+      return res.status(400).json({ error: "No data received from client" });
+    }
+
+    const { userId, subject, message, ofType, stars } = formData;
+
+    const doctor = await Doctor.findOneAndUpdate(
+      { _id: userId },
+      {
+        $push: {
+          submissions: {
+            subject,
+            message,
+            stars,
+            ofType,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    if (!doctor) {
+      return res.status(404).json({ error: "Doctor not found" });
+    }
+
+    res.status(200).json({
+      message: "Submission added successfully",
+      doctor,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   addPatient,
   getPatients,
   changeStatus,
   updateProfile,
+  addSubmission,
 };

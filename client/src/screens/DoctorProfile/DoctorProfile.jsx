@@ -37,7 +37,6 @@ const DoctorProfile = ({ comingFrom }) => {
 
   useEffect(() => {
     if (comingFrom === "profile" && currentUser) {
-      console.log(currentUser);
       setFormValues({
         firstName: currentUser?.user?.user?.firstName || currentUser?.firstName,
         lastName: currentUser?.user?.user?.lastName || currentUser?.lastName,

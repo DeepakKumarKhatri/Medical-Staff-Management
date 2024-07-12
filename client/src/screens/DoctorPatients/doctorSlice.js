@@ -89,6 +89,28 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
+export const addSubmission = createAsyncThunk(
+  "doctor/addSubmission",
+  async (formData, thunkAPI) => {
+    try {
+      const response = await fetch(`${server_url}/api/doctor/add_submission`, {
+        method: "PATCH",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        const error = await response.json();
+        return thunkAPI.rejectWithValue(error);
+      }
+      return response.json();
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ message: "Network error" });
+    }
+  }
+);
+
 const doctorSlice = createSlice({
   name: "doctor",
   initialState: {
@@ -174,6 +196,24 @@ const doctorSlice = createSlice({
       state.errorMessage = action.payload
         ? action.payload.message || "FAILED TO UPDATE PROFILE"
         : "FAILED TO UPDATE PROFILE";
+    });
+    builder.addCase(addSubmission.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.errorMessage = "";
+    });
+    builder.addCase(addSubmission.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.errorMessage = "";
+      state.patients.push(action.payload.patient);
+    });
+    builder.addCase(addSubmission.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.errorMessage = action.payload
+        ? action.payload.message || "FAILED"
+        : "FAILED";
     });
   },
 });

@@ -8,5 +8,6 @@ router.post("/add_patient", doctorController.addPatient);
 router.post("/get_patients", doctorController.getPatients);
 router.post("/change_status", doctorController.changeStatus);
 router.patch("/update_profile", doctorController.updateProfile);
+router.patch("/add_submission", doctorController.addSubmission);
 
 module.exports = router;
