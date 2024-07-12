@@ -46,8 +46,6 @@ const addPatient = async (req, res) => {
       systemAccess: { userRole: "patient" },
       diseases: diseases,
     };
-    console.log("DATAAAAAAAAAAAAA")
-    console.log({data})
 
     const patient = await Patient.create(data);
     if (!patient) {
@@ -56,14 +54,8 @@ const addPatient = async (req, res) => {
         .json({ error: "Error occurred while creating patient" });
     }
 
-    console.log("PATIENTT")
-    console.log({patient})
-
     if (patient._id) {
-        console.log("INSIDE IF");
-        
       doctor.patients.push({ patient: patient._id });
-      console.log({doctor})
       await doctor.save();
     } else {
       return res.status(500).json({ error: "Patient ID is not valid" });
@@ -133,8 +125,55 @@ const changeStatus = async (req, res) => {
   }
 };
 
+const updateProfile = async (req, res) => {
+  try {
+    const doctorData = req.body;
+    if (!doctorData) {
+      return res.status(400).json({ error: "No data received from client" });
+    }
+
+    const {
+      firstName,
+      lastName,
+      id,
+      profileImage,
+      originalID,
+      department,
+      yearsOfExperience,
+      gender,
+    } = doctorData;
+
+    const doctor = await Doctor.findOneAndUpdate(
+      { userId: originalID },
+      {
+        firstName,
+        lastName,
+        avatar: profileImage,
+        userId: id,
+        department,
+        yearsOfExperience,
+        gender,
+      },
+      { new: true }
+    );
+
+    if (!doctor) {
+      return res.status(404).json({ error: "Error occurred" });
+    }
+
+    res.status(200).json({
+      message: "SUCCESS",
+      doctor,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   addPatient,
   getPatients,
   changeStatus,
+  updateProfile,
 };

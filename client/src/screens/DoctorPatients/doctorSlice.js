@@ -67,6 +67,28 @@ export const changePatientStatus = createAsyncThunk(
   }
 );
 
+export const updateProfile = createAsyncThunk(
+  "doctor/updateProfile",
+  async (doctorData, thunkAPI) => {
+    try {
+      const response = await fetch(`${server_url}/api/doctor/update_profile`, {
+        method: "PATCH",
+        body: JSON.stringify(doctorData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        const error = await response.json();
+        return thunkAPI.rejectWithValue(error);
+      }
+      return response.json();
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ message: "Network error" });
+    }
+  }
+);
+
 const doctorSlice = createSlice({
   name: "doctor",
   initialState: {
@@ -134,6 +156,24 @@ const doctorSlice = createSlice({
       state.errorMessage = action.payload
         ? action.payload.message || "FAILED TO CHANGE PATIENT STATUS"
         : "FAILED TO CHANGE PATIENT STATUS";
+    });
+    builder.addCase(updateProfile.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.errorMessage = "";
+    });
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.errorMessage = "";
+      state.patients.push(action.payload.patient);
+    });
+    builder.addCase(updateProfile.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.errorMessage = action.payload
+        ? action.payload.message || "FAILED TO UPDATE PROFILE"
+        : "FAILED TO UPDATE PROFILE";
     });
   },
 });
