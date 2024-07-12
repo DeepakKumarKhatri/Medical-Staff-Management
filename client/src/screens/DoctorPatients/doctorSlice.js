@@ -85,6 +85,7 @@ const doctorSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.errorMessage = "";
+      state.patients.push(action.payload.patient);
     });
     builder.addCase(addPatient.rejected, (state, action) => {
       state.isLoading = false;

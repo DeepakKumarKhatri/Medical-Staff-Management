@@ -5,9 +5,15 @@ const bcrypt = require("bcryptjs");
 const addPatient = async (req, res) => {
   try {
     const patientData = req.body;
+    console.log(patientData);
 
     if (!patientData) {
       return res.status(400).json({ error: "No data received from client" });
+    }
+
+    const existingPatient = await Patient.findOne({ userId: patientData.id });
+    if (existingPatient) {
+      return res.status(409).json({ error: "Patient already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(patientData.pass, 10);
@@ -40,14 +46,28 @@ const addPatient = async (req, res) => {
       systemAccess: { userRole: "patient" },
       diseases: diseases,
     };
+    console.log("DATAAAAAAAAAAAAA")
+    console.log({data})
 
     const patient = await Patient.create(data);
     if (!patient) {
-      return res.status(404).json({ error: "Error occurred" });
+      return res
+        .status(404)
+        .json({ error: "Error occurred while creating patient" });
     }
 
-    doctor.patients.push({ patient: patient._id });
-    await doctor.save();
+    console.log("PATIENTT")
+    console.log({patient})
+
+    if (patient._id) {
+        console.log("INSIDE IF");
+        
+      doctor.patients.push({ patient: patient._id });
+      console.log({doctor})
+      await doctor.save();
+    } else {
+      return res.status(500).json({ error: "Patient ID is not valid" });
+    }
 
     res.status(200).json({
       message: "SUCCESS",

@@ -10,6 +10,7 @@ import {
 import StatusDropdown from "../Dropdown/StatusDropdown";
 
 const PatientCard = ({ patient }) => {
+  console.log(patient);
   return (
     <Card
       sx={{
@@ -46,7 +47,7 @@ const PatientCard = ({ patient }) => {
         </Typography>
       </CardContent>
       <Box sx={{ textAlign: "center" }}>
-        <StatusDropdown diseases={patient.diseases} patientId={patient}/>
+        <StatusDropdown patientId={patient} />
       </Box>
     </Card>
   );
@@ -55,7 +56,7 @@ const PatientCard = ({ patient }) => {
 const PatientGrid = ({ patients }) => {
   return (
     <Grid container spacing={3}>
-      {patients.map((patient, index) => (
+      {patients?.map((patient, index) => (
         <Grid item xs={12} sm={6} md={4} key={index}>
           <PatientCard patient={patient} />
         </Grid>

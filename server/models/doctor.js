@@ -75,7 +75,6 @@ const doctorSchema = new mongoose.Schema(
         patient: {
           type: mongoose.Types.ObjectId,
           ref: "Patient",
-          default: [],
         },
       },
     ],

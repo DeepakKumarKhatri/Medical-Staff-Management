@@ -11,12 +11,11 @@ import { getStatusClass } from "../../constants/getStatusClass";
 import { useDispatch, useSelector } from "react-redux";
 import { changePatientStatus } from "../../screens/DoctorPatients/doctorSlice";
 
-const StatusDropdown = ({ diseases, patientId }) => {
+const StatusDropdown = ({ patientId }) => {
   const [status, setStatus] = React.useState("");
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.doctor.isLoading);
-  const [recievedId] = React.useState(patientId._id);
 
   React.useEffect(() => {
     const initialStatus = patientId.status;
@@ -26,7 +25,7 @@ const StatusDropdown = ({ diseases, patientId }) => {
   const handleChange = (event) => {
     const newStatus = event.target.value;
     setStatus(newStatus);
-    dispatch(changePatientStatus({ patientId: recievedId, status: newStatus }));
+    dispatch(changePatientStatus({ patientId, status: newStatus }));
     setOpenSnackbar(true);
   };
 
