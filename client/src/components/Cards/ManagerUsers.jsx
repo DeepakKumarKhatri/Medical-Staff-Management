@@ -187,9 +187,9 @@ export default function ManagerUsers({ comingFrom, data }) {
                               open={Boolean(anchorEl && selectedRow === row)}
                               onClose={handleMenuClose}
                             >
-                              <MenuItem onClick={() => handleEdit(row.id)}>
+                              {/* <MenuItem onClick={() => handleEdit(row.id)}>
                                 Edit
-                              </MenuItem>
+                              </MenuItem> */}
                               <MenuItem onClick={() => handleDelete(row.id)}>
                                 Delete
                               </MenuItem>

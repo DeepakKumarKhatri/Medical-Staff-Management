@@ -7,31 +7,42 @@ import { getFeedback } from "./feedbackSlice";
 
 const Feedback = ({ comingFrom }) => {
   const dispatch = useDispatch();
-  const { isLoading, isError, doctorsFeedback, patientsFeedback, errorMessage } = useSelector(state => state.feedback);
+  const {
+    isLoading,
+    isError,
+    doctorsFeedback,
+    patientsFeedback,
+    errorMessage,
+  } = useSelector((state) => state.feedback);
   const [filter, setFilter] = useState("feedback");
 
   useEffect(() => {
     dispatch(getFeedback());
   }, [dispatch]);
 
-  const feedbackData = comingFrom === "doctor" ? doctorsFeedback : patientsFeedback;
+  const feedbackData =
+    comingFrom === "doctor" ? doctorsFeedback : patientsFeedback;
 
-  const filteredData = feedbackData.map(user => ({
-    ...user,
-    submissions: user.submissions.filter(sub => sub.ofType === filter)
-  })).filter(user => user.submissions.length > 0);
+  const filteredData = feedbackData
+    .map((user) => ({
+      ...user,
+      submissions: user.submissions.filter((sub) => sub.ofType === filter),
+    }))
+    .filter((user) => user.submissions.length > 0);
 
   const handleFilterChange = (type) => {
     setFilter(type);
   };
 
   const headerContent = {
-    main: comingFrom === "doctor"
-      ? `DOCTOR'S ${filter.toUpperCase()}`
-      : `PATIENTS' ${filter.toUpperCase()}`,
-    para: comingFrom === "doctor"
-      ? `Following are the ${filter} received from different doctors.`
-      : `Following are the ${filter} received from different patients.`,
+    main:
+      comingFrom === "doctor"
+        ? `DOCTOR'S ${filter.toUpperCase()}`
+        : `PATIENTS' ${filter.toUpperCase()}`,
+    para:
+      comingFrom === "doctor"
+        ? `Following are the ${filter} received from different doctors.`
+        : `Following are the ${filter} received from different patients.`,
   };
 
   return (
@@ -73,7 +84,10 @@ const Feedback = ({ comingFrom }) => {
             <FeedbackCard
               key={`${index}-${subIndex}`}
               feedback={{
-                userName: `${user.firstName} ${user.lastName}`,
+                userName:
+                  comingFrom === "doctor"
+                    ? "Dr. " + `${user.firstName} ${user.lastName}`
+                    : `${user.firstName} ${user.lastName}`,
                 userImage: user.avatar,
                 subject: submission.subject,
                 message: submission.message,
