@@ -25,17 +25,20 @@ const Feedback = ({ comingFrom }) => {
     setFilter(type);
   };
 
+  const headerContent = {
+    main: comingFrom === "doctor"
+      ? `DOCTOR'S ${filter.toUpperCase()}`
+      : `PATIENTS' ${filter.toUpperCase()}`,
+    para: comingFrom === "doctor"
+      ? `Following are the ${filter} received from different doctors.`
+      : `Following are the ${filter} received from different patients.`,
+  };
+
   return (
     <Container>
       <Header
-        main_content={
-          comingFrom === "doctor" ? "DOCTOR'S FEEDBACK" : "PATIENTS' FEEDBACK"
-        }
-        para_content={
-          comingFrom === "doctor"
-            ? "Following are the feedbacks received from different doctors."
-            : "Following are the feedbacks received from different patients."
-        }
+        main_content={headerContent.main}
+        para_content={headerContent.para}
       />
       <Box display="flex" justifyContent="center" mb={2}>
         <Button

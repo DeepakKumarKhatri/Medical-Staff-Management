@@ -199,7 +199,10 @@ const ClinicManagerSidebar = ({ children }) => {
         />
       </SidebarItem>
 
-      <SidebarItem icon={<MessageSquareText size={20} />} text="Feedbacks">
+      <SidebarItem
+        icon={<MessageSquareText size={20} />}
+        text="Feedbacks / Complaints"
+      >
         <SidebarItem
           icon={<GraduationCap size={16} />}
           text="Doctors"
