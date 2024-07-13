@@ -68,11 +68,7 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <PatientProfile comingFrom={"profile"} />,
-      },
-      {
-        path: "edit-profile",
-        element: <PatientProfile comingFrom={"edit-profile"} />,
+        element: <PatientProfile />,
       },
       {
         path: "treatment-details",
