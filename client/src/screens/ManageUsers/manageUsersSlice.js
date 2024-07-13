@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { server_url } from "../../constants/server_url";
+import Cookies from "js-cookie";
+const token = Cookies.get("token");
 
 export const getDoctors = createAsyncThunk(
   "manageUsers/getDoctors",
@@ -9,6 +11,7 @@ export const getDoctors = createAsyncThunk(
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
       });
@@ -34,6 +37,7 @@ export const getPatients = createAsyncThunk(
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           credentials: "include",
         }
@@ -60,6 +64,7 @@ export const getClinicManagers = createAsyncThunk(
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           credentials: "include",
         }
@@ -84,6 +89,7 @@ export const deleteDoctor = createAsyncThunk(
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
         body: JSON.stringify({ doctorID }),
@@ -110,6 +116,7 @@ export const deleteClinicManager = createAsyncThunk(
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           credentials: "include",
           body: JSON.stringify({ clinicManagerID }),
@@ -137,6 +144,7 @@ export const deletePatient = createAsyncThunk(
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           credentials: "include",
           body: JSON.stringify({ patientID }),

@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { server_url } from "../../constants/server_url";
+import Cookies from "js-cookie";
+const token = Cookies.get("token");
 
 export const addPatient = createAsyncThunk(
   "doctor/addPatient",
@@ -10,6 +12,7 @@ export const addPatient = createAsyncThunk(
         body: JSON.stringify(patientData),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
       if (!response.ok) {
@@ -32,6 +35,7 @@ export const getPatients = createAsyncThunk(
         body: JSON.stringify({ doctorId }),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
       if (!response.ok) {
@@ -54,6 +58,7 @@ export const changePatientStatus = createAsyncThunk(
         body: JSON.stringify({ patientId, status }),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
       if (!response.ok) {
@@ -76,6 +81,7 @@ export const updateProfile = createAsyncThunk(
         body: JSON.stringify(doctorData),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
       if (!response.ok) {
@@ -98,6 +104,7 @@ export const addSubmission = createAsyncThunk(
         body: JSON.stringify(formData),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
       if (!response.ok) {

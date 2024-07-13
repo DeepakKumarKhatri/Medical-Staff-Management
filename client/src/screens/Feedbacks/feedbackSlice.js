@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { server_url } from "../../constants/server_url";
+import Cookies from "js-cookie";
+const token = Cookies.get("token");
 
 export const getFeedback = createAsyncThunk(
   "feedback/getFeedback",
@@ -11,6 +13,7 @@ export const getFeedback = createAsyncThunk(
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -18,7 +21,7 @@ export const getFeedback = createAsyncThunk(
         const error = await response.json();
         return thunkAPI.rejectWithValue(error);
       }
-      const data = await response.json(); 
+      const data = await response.json();
       return { doctors: data.doctors, patients: data.patients };
     } catch (error) {
       return thunkAPI.rejectWithValue({ message: "Network error" });

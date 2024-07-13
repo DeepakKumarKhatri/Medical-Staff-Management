@@ -1,15 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 import { server_url } from "../../constants/server_url";
 
 export const addPatientSubmission = createAsyncThunk(
   "patient/addPatientSubmission",
   async (formData, thunkAPI) => {
+    const token = Cookies.get("token");
     try {
       const response = await fetch(`${server_url}/api/patient/add_submission`, {
         method: "PATCH",
         body: JSON.stringify(formData),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
       if (!response.ok) {
@@ -40,7 +43,6 @@ const doctorSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.errorMessage = "";
-      state.patients.push(action.payload.patient);
     });
     builder.addCase(addPatientSubmission.rejected, (state, action) => {
       state.isLoading = false;
