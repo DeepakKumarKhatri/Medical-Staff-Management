@@ -15,5 +15,6 @@ router.post("/add_doctor", clinicManagerController.addDoctor);
 router.post("/add_patient", clinicManagerController.addPatient);
 router.post("/add_manager", clinicManagerController.addClinicManager);
 router.patch("/update_profile", clinicManagerController.updateProfile);
+router.get("/get_feedback", clinicManagerController.getFeedbacks);
 
 module.exports = router;

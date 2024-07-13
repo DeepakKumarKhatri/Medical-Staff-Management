@@ -4,6 +4,7 @@ import manageUsersReducer from "../screens/ManageUsers/manageUsersSlice";
 import clinicManagerUsersReducer from "../components/ClinicManagerUsers/clinicManagerUsersSlice";
 import doctorReducer from "../screens/DoctorPatients/doctorSlice";
 import patientReducer from "../components/PatientSidebar/patientSlice";
+import feedbackReducer from "../screens/Feedbacks/feedbackSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     clinicManagerUsers: clinicManagerUsersReducer,
     doctor: doctorReducer,
     patient: patientReducer,
+    feedback: feedbackReducer,
   },
 });

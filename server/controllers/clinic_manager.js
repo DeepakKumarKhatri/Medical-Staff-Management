@@ -280,6 +280,44 @@ const updateProfile = async (req, res) => {
   }
 };
 
+const getFeedbacks = async (req, res) => {
+  try {
+    const patients = await Patient.find(
+      { 'submissions.0': { $exists: true } },
+      'firstName lastName avatar submissions'
+    ).lean().exec();
+
+    const doctors = await Doctor.find(
+      { 'submissions.0': { $exists: true } },
+      'firstName lastName avatar submissions'
+    ).lean().exec();
+
+    const patientsWithSubmissions = patients.map((patient) => ({
+      firstName: patient.firstName,
+      lastName: patient.lastName,
+      avatar: patient.avatar,
+      submissions: patient.submissions,
+      userType: 'patient',
+    }));
+
+    const doctorsWithSubmissions = doctors.map((doctor) => ({
+      firstName: doctor.firstName,
+      lastName: doctor.lastName,
+      avatar: doctor.avatar,
+      submissions: doctor.submissions,
+      userType: 'doctor',
+    }));
+
+    res.status(200).json({
+      patients: patientsWithSubmissions,
+      doctors: doctorsWithSubmissions,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   signUpClinicManager,
   getDoctors,
@@ -292,4 +330,5 @@ module.exports = {
   addPatient,
   addClinicManager,
   updateProfile,
+  getFeedbacks,
 };

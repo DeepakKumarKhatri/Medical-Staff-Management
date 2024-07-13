@@ -39,27 +39,28 @@ const FeedbackCard = ({ feedback }) => {
             <Typography variant="body2" color="textSecondary" gutterBottom>
               {feedback.message}
             </Typography>
-            {feedback.messageType === "Feedback" && (
-              <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
-                <Rating
-                  name="rating"
-                  value={feedback.rating}
-                  readOnly
-                  getLabelText={(value) => labels[value]}
-                  IconContainerComponent={(props) => {
-                    const { value, ...other } = props;
-                    return (
-                      <Tooltip title={labels[value]} arrow>
-                        <span {...other} />
-                      </Tooltip>
-                    );
-                  }}
-                />
-                <Typography variant="body2" sx={{ ml: 2 }}>
-                  {labels[feedback.rating]}
-                </Typography>
-              </Box>
-            )}
+            {feedback.messageType === "feedback" &&
+              feedback.rating !== null && (
+                <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+                  <Rating
+                    name="rating"
+                    value={feedback.rating}
+                    readOnly
+                    getLabelText={(value) => labels[value]}
+                    IconContainerComponent={(props) => {
+                      const { value, ...other } = props;
+                      return (
+                        <Tooltip title={labels[value]} arrow>
+                          <span {...other} />
+                        </Tooltip>
+                      );
+                    }}
+                  />
+                  <Typography variant="body2" sx={{ ml: 2 }}>
+                    {labels[feedback.rating]}
+                  </Typography>
+                </Box>
+              )}
           </Grid>
           <Grid item xs={12} sx={{ textAlign: "right" }}>
             <Tooltip title="Download PDF">
