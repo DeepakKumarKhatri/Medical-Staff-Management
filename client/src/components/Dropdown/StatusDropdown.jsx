@@ -15,10 +15,10 @@ const StatusDropdown = ({ patientId }) => {
   const [status, setStatus] = React.useState("");
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.doctor.isLoading);
+  const isLoading = useSelector((state) => state?.doctor?.isLoading);
 
   React.useEffect(() => {
-    const initialStatus = patientId.status;
+    const initialStatus = patientId?.status;
     setStatus(initialStatus);
   }, [patientId]);
 

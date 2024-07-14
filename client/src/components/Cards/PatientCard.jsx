@@ -10,7 +10,6 @@ import {
 import StatusDropdown from "../Dropdown/StatusDropdown";
 
 const PatientCard = ({ patient }) => {
-  console.log(patient);
   return (
     <Card
       sx={{
@@ -30,20 +29,20 @@ const PatientCard = ({ patient }) => {
     >
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
         <Avatar
-          alt={`${patient.firstName} ${patient.lastName}`}
-          src={patient.avatar}
+          alt={`${patient?.firstName} ${patient?.lastName}`}
+          src={patient?.avatar}
           sx={{ width: 100, height: 100 }}
         />
       </Box>
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography variant="h6" gutterBottom className="text-center">
-          {patient.firstName} {patient.lastName}
+          {patient?.firstName} {patient?.lastName}
         </Typography>
         <Typography variant="body2" color="textSecondary" gutterBottom>
           Patient Credentials
         </Typography>
         <Typography variant="body1" sx={{ mt: 1 }}>
-          <strong>ID:</strong> {patient.userId}
+          <strong>ID:</strong> {patient?.userId}
         </Typography>
       </CardContent>
       <Box sx={{ textAlign: "center" }}>

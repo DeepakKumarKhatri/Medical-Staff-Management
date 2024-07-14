@@ -4,7 +4,6 @@ import SignIn from "./components/Auth/components/SignIn";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NotFound from "./screens/NotFound/NotFound";
 import PatientTreatment from "./screens/PatientTreatment/PatientTreatment";
-import PatientInstructions from "./screens/PatientInstructions/PatientInstructions";
 import PatientProfile from "./screens/PatientProfile/PatientProfile";
 import TreatmentDetail from "./components/Treatment/TreatmentDetail";
 import InstructionsDetail from "./components/Instructions/InstructionsDetail";

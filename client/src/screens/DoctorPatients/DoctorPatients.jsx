@@ -12,7 +12,7 @@ import { useEffect } from "react";
 
 const DoctorPatients = () => {
   const dispatch = useDispatch();
-  const currentUser = useSelector((state) => state.auth.user);
+  const currentUser = useSelector((state) => state?.auth?.user);
   const doctorId = currentUser?.id;
 
   useEffect(() => {
@@ -21,10 +21,10 @@ const DoctorPatients = () => {
     }
   }, [doctorId, dispatch]);
 
-  const patients = useSelector((state) => state.doctor.patients);
-  const isLoading = useSelector((state) => state.doctor.isLoading);
-  const isError = useSelector((state) => state.doctor.isError);
-  const errorMessage = useSelector((state) => state.doctor.errorMessage);
+  const patients = useSelector((state) => state?.doctor?.patients);
+  const isLoading = useSelector((state) => state?.doctor?.isLoading);
+  const isError = useSelector((state) => state?.doctor?.isError);
+  const errorMessage = useSelector((state) => state?.doctor?.errorMessage);
 
   return (
     <div className="m-4">
