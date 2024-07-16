@@ -16,7 +16,7 @@ const StatusDropdown = ({ patientId }) => {
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state?.doctor?.isLoading);
-
+  
   React.useEffect(() => {
     const initialStatus = patientId?.status;
     setStatus(initialStatus);
@@ -25,7 +25,8 @@ const StatusDropdown = ({ patientId }) => {
   const handleChange = (event) => {
     const newStatus = event.target.value;
     setStatus(newStatus);
-    dispatch(changePatientStatus({ patientId, status: newStatus }));
+    const reservedID = patientId?._id;
+    dispatch(changePatientStatus({ patientId: reservedID, status: newStatus }));
     setOpenSnackbar(true);
   };
 

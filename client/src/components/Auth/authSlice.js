@@ -39,7 +39,8 @@ export const userSignUp = createAsyncThunk(
         const error = await response.json();
         return thunkAPI.rejectWithValue(error);
       }
-      return response.json();
+      const patientData = await response.json();
+      return patientData;
     } catch (error) {
       return thunkAPI.rejectWithValue({ message: "Network error" });
     }
@@ -80,9 +81,9 @@ const authSlice = createSlice({
       state.isError = true;
       state.errorMessage = action.payload.message || "Login failed";
     });
-    builder.addCase(userSignUp.fulfilled, (state, action) => {
+    builder.addCase(userSignUp.fulfilled, (state) => {
       state.isLoading = false;
-      state.user = action.payload.data;
+      state.user = null;
       state.isError = false;
       state.errorMessage = "";
     });

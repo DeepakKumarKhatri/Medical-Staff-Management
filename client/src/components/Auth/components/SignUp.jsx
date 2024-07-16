@@ -17,7 +17,7 @@ import { userSignUp } from "../authSlice";
 export default function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, data, isError, errorMessage } = useSelector(
+  const { isLoading, isError, errorMessage, user } = useSelector(
     (state) => state.auth
   );
   const [userData, setUserData] = useState({
@@ -33,7 +33,7 @@ export default function SignUp() {
   });
 
   useEffect(() => {
-    if (data && data.message === "Patient registered successfully") {
+    if (user) {
       setSnackbar({
         open: true,
         message: "Registration successful",
@@ -43,7 +43,7 @@ export default function SignUp() {
     } else if (isError) {
       setSnackbar({ open: true, message: errorMessage, severity: "error" });
     }
-  }, [data, isError, errorMessage, navigate]);
+  }, [isError, errorMessage, navigate, user]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
