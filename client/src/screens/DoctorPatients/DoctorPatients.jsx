@@ -13,6 +13,7 @@ import { useEffect } from "react";
 const DoctorPatients = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state?.auth?.user);
+  const username = currentUser?.user?.user?.firstName;
   const doctorId = currentUser?.id;
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const DoctorPatients = () => {
       <Box sx={{ display: "flex", alignItems: "center", mb: 2, gap: 2 }}>
         <Box sx={{ flex: 1 }}>
           <h1 className="text-3xl font-bold text-blue-900">
-            Dr. Deepak's Patients
+            Dr. {username}'s Patients
           </h1>
           <p className="text-gray-600">
             Following are all the patients that you have checked within Medico.

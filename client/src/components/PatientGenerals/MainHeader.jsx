@@ -1,6 +1,6 @@
 import React from "react";
 
-const MainHeader = ({ comingFrom,user }) => {
+const MainHeader = ({ comingFrom, user }) => {
   return (
     <div className="flex flex-col p-4 mt-6">
       {comingFrom === "PT" ? (
@@ -15,7 +15,7 @@ const MainHeader = ({ comingFrom,user }) => {
       ) : (
         <>
           <h1 className="text-3xl font-bold text-blue-900 mb-2">
-            Deepak's Instructions History
+            {user}'s Instructions History
           </h1>
           <p className="text-gray-600 mb-6">
             This page contains all the instructions that you have got from the

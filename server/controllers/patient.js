@@ -56,7 +56,7 @@ const addSubmission = async (req, res) => {
     );
 
     if (!patient) {
-      return res.status(404).json({ error: "Doctor not found" });
+      return res.status(404).json({ error: "Patient not found" });
     }
 
     res.status(200).json({
